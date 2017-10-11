@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<AbsoluteLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <ImageButton
+        android:id="@+id/imageButton"
+        android:layout_width="225dp"
+        android:layout_height="79dp"
+        android:layout_x="84dp"
+        android:layout_y="172dp"
+        android:onClick="verProjetos"
+        app:srcCompat="@drawable/buttonVerProjetos" />
+
+    <ImageButton
+        android:id="@+id/imageButton"
+        android:layout_width="225dp"
+        android:layout_height="79dp"
+        android:layout_x="88dp"
+        android:layout_y="339dp"
+        android:onClick="verProjetos"
+        app:srcCompat="@drawable/buttonSair" />
+
+    <ImageButton
+        android:id="@+id/imageButton"
+        android:layout_width="225dp"
+        android:layout_height="79dp"
+        android:layout_x="85dp"
+        android:layout_y="255dp"
+        android:onClick="verProjetos"
+        app:srcCompat="@drawable/buttonCriarProjeto" />
+
+    <TextView
+        android:id="@+id/textView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_x="1dp"
+        android:layout_y="60dp"
+        android:text="Rede dos saberes"
+        android:textAppearance="@style/TextAppearance.AppCompat.Display2" />
+
+</AbsoluteLayout>
