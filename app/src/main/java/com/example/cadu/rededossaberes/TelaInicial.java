@@ -2,24 +2,19 @@ package com.example.cadu.rededossaberes;
 
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.util.Log;
-import android.view.View;
-import android.widget.Button;
-import android.widget.Toast;
-import android.support.v7.widget.Toolbar;
-import java.util.jar.Attributes;
-import static android.widget.Toast.*;
+import android.view.MenuInflater;
+import android.view.Menu;
 
 public class TelaInicial extends AppCompatActivity {
 
     @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.menu_buttons, menu);
+        return true;
+    }
+    @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
     }
-    public void verProjetos()
-    {
-
-    }
-
-
 }
