@@ -1,10 +1,10 @@
 <resources>
     <string name="app_name">Rede dos Saberes</string>
-    <string name ="settings">settings</string>
-    <string name ="back">back</string>
-    <string name = "botao_tela_inicial">O que fica ao redor dos botões da tela inicial</string>
-    <string name = "logo">logo do labetinho</string>
-    <string name = "primeiro_botao">Ver Projetos</string>
-    <string name = "segundo_botao">Criar Projetos</string>
-    <string name = "terceiro_botao">Sair</string>
+    <string name="settings">settings</string>
+    <string name="back">back</string>
+    <string name="botao_tela_inicial">O que fica ao redor dos botões da tela inicial</string>
+    <string name="logo">logo do labetinho</string>
+    <string name="primeiro_botao">Ver Projetos</string>
+    <string name="segundo_botao">Criar Projetos</string>
+    <string name="terceiro_botao">Sair</string>
 </resources>
