@@ -63,7 +63,7 @@
         android:text="Email"
         tools:layout_editor_absoluteX="23dp"
         tools:layout_editor_absoluteY="64dp"
-        android:layout_marginBottom="30dp"
+        android:layout_marginBottom="17dp"
         android:layout_above="@+id/editText4"
         android:layout_alignStart="@+id/editText4" />
 
