@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.example.cadu.rededossaberes.CriarProjetos">
+
+    <EditText
+        android:id="@+id/editText2"
+        android:layout_width="215dp"
+        android:layout_height="38dp"
+        android:layout_above="@+id/editText3"
+        android:layout_alignParentStart="true"
+        android:layout_marginBottom="25dp"
+        android:ems="10"
+        android:inputType="textPersonName"
+        android:text="Nome"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:layout_editor_absoluteX="23dp" />
+    <EditText
+        android:id="@+id/editText3"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/editText4"
+        android:layout_alignStart="@+id/editText2"
+        android:layout_marginBottom="69dp"
+        android:ems="10"
+        android:inputType="textEmailAddress"
+        android:text="Email"
+        tools:layout_editor_absoluteX="23dp"
+        tools:layout_editor_absoluteY="64dp" />
+    <EditText
+        android:id="@+id/editText4"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:ems="10"
+        android:inputType="phone"
+        android:text="Telefone"
+
+        tools:layout_editor_absoluteX="23dp"
+        tools:layout_editor_absoluteY="121dp"
+        android:layout_above="@+id/editText"
+        android:layout_toStartOf="@+id/button2"
+        android:layout_marginBottom="30dp" />
+    <EditText
+        android:id="@+id/editText"
+        android:layout_width="314dp"
+        android:layout_height="172dp"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentStart="true"
+        android:layout_marginBottom="24dp"
+        android:ems="10"
+        android:inputType="text"
+        android:text="Post"
+        tools:layout_editor_absoluteX="25dp"
+        tools:layout_editor_absoluteY="176dp" />
+    <Button
+        android:id="@+id/button2"
+        android:layout_width="102dp"
+        android:layout_height="52dp"
+        android:text="Enviar"
+        tools:layout_editor_absoluteX="239dp"
+        tools:layout_editor_absoluteY="369dp"
+        android:layout_marginBottom="37dp"
+        android:layout_alignParentBottom="true"
+        android:layout_alignEnd="@+id/editText" />
+
+    <ImageButton
+        android:id="@+id/imageButton4"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/gallery"
+        tools:layout_editor_absoluteX="21dp"
+        tools:layout_editor_absoluteY="369dp"
+        android:layout_alignBottom="@+id/button2"
+        android:layout_alignStart="@+id/editText" />
+
+
+
+</RelativeLayout>

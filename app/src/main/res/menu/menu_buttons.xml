@@ -2,11 +2,11 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
         xmlns:app="http://schemas.android.com/apk/res-auto">
     <item
-        android:id = "@+id/action_return"
+        android:id="@+id/action_return"
         android:icon="@drawable/back"
         android:title="@string/back"
         app:showAsAction="ifRoom"
-        android:visible="false" />
+        android:visible="false"/>
     <item
         android:id="@+id/action_favorite"
         android:icon="@drawable/three_bars"

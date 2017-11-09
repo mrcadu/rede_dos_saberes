@@ -18,13 +18,12 @@
         </activity>
         <activity android:name=".VerProjetos" />
         <activity android:name=".CriarProjetos"></activity>
-
-        <supports-screens
-            android:resizeable="true"
-            android:smallScreens="true"
-            android:normalScreens="true"
-            android:largeScreens="true"
-            android:xlargeScreens="true" />
     </application>
+    <supports-screens
+        android:resizeable="true"
+        android:smallScreens="true"
+        android:normalScreens="true"
+        android:largeScreens="true"
+        android:xlargeScreens="true" />
 
 </manifest>
