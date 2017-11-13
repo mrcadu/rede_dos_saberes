@@ -6,12 +6,15 @@ import android.os.Bundle;
 import android.view.MenuInflater;
 import android.view.Menu;
 import android.view.View;
-import com.google.firebase.auth.FirebaseUser;
-import com.google.firebase.auth.FirebaseAuth;
+import com.example.cadu.login.LoginActionBean;
 
 public class TelaInicial extends AppCompatActivity {
-
-    private FirebaseAuth autenticador;
+    @Override
+    protected void onCreate(Bundle savedInstanceState)
+    {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_tela_inicial);
+    }
     @Override
     public boolean onCreateOptionsMenu(Menu menu)
     {
@@ -20,22 +23,19 @@ public class TelaInicial extends AppCompatActivity {
         return true;
     }
     @Override
-    protected void onCreate(Bundle savedInstanceState)
-    {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_tela_inicial);
-        autenticador = FirebaseAuth.getInstance();
-    }
-    @Override
     public void onStart()
     {
 
         super.onStart();
-        FirebaseUser currentUser = autenticador.getCurrentUser();
-        updateUI(currentUser);
     }
     public void verProjetos(View view)
     {
+/*        LoginActionBean loginActionBean = new LoginActionBean();
+        if(!loginActionBean.isUsuarioLogado())
+        {
+            Intent mudarActivityLogin = new Intent(this,Login.class);
+            startActivity(mudarActivityLogin);
+        }*/
         Intent mudarActivityVerProjetos = new Intent(this,VerProjetos.class);
         startActivity(mudarActivityVerProjetos);
     }
