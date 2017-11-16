@@ -1,36 +1,45 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context="com.example.cadu.rededossaberes.Login">
 
     <EditText
+        android:id="@+id/Email"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_centerVertical="true"
+        android:ems="15"
+        android:inputType="textEmailAddress"
+        android:hint="Email" />
+    <EditText
         android:id="@+id/Senha"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:ems="10"
+        android:layout_centerHorizontal="true"
+        android:layout_centerVertical="true"
+        android:layout_below="@id/Email"
+        android:ems="15"
         android:inputType="textPassword"
-        android:text="Senha"
-        tools:layout_editor_absoluteX="172dp"
-        tools:layout_editor_absoluteY="315dp" />
-
-    <EditText
-        android:id="@+id/Email"
-        android:layout_width="wrap_content"
-        android:layout_height="40dp"
-        android:ems="10"
-        android:inputType="textEmailAddress"
-        android:text="Email"
-        tools:layout_editor_absoluteX="172dp"
-        tools:layout_editor_absoluteY="228dp" />
-
+        android:hint="Senha"
+        android:layout_marginTop="30dp" />
     <Button
-        android:id="@+id/ContinuarSemLogin"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Continuar Sem Logar"
-        tools:layout_editor_absoluteX="353dp"
-        tools:layout_editor_absoluteY="445dp" />
-</android.support.constraint.ConstraintLayout>
+        android:layout_below="@id/Senha"
+        android:layout_alignEnd="@id/Senha"
+        android:layout_marginTop="30dp"
+        android:text="Criar Conta"
+        android:onClick="criarConta"/>
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/Senha"
+        android:layout_alignStart="@id/Senha"
+        android:layout_marginTop="30dp"
+        android:text="Continuar sem conta"
+        android:onClick="continuarSemConta"/>
+
+</RelativeLayout>

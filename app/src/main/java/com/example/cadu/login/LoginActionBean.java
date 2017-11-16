@@ -7,16 +7,18 @@ public class LoginActionBean
     FirebaseAuth autenticador;
     public void criarContaLogando(String email, String senha)
     {
+        autenticador = FirebaseAuth.getInstance();
         autenticador.createUserWithEmailAndPassword(email,senha);
         autenticador.signInWithEmailAndPassword(email,senha);
     }
     public boolean isUsuarioLogado()
     {
-        if(autenticador.getCurrentUser() != null)
+        autenticador = FirebaseAuth.getInstance();
+        if(autenticador.getCurrentUser() == null)
         {
-            return true;
+            return false;
         }
-        return false;
+        return true;
     }
 
 }
