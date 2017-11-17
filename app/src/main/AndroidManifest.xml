@@ -9,6 +9,9 @@
         android:smallScreens="true"
         android:xlargeScreens="true" />
 
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.CHANGE_NETWORK_STATE" />
+
     <application
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
@@ -25,10 +28,8 @@
         </activity>
         <activity android:name=".VerProjetos" />
         <activity android:name=".CriarProjetos" />
-        <activity android:name=".Login"></activity>
-
+        <activity android:name=".Login" />
+        <activity android:name=".Step"></activity>
     </application>
-    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
-    <uses-permission android:name="android.permission.CHANGE_NETWORK_STATE"/>
 
 </manifest>

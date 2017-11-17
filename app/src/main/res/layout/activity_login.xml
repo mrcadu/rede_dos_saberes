@@ -3,28 +3,30 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.example.cadu.rededossaberes.Login">
+    tools:context="com.example.cadu.rededossaberes.Login"
+    android:background="@color/white">
 
     <EditText
         android:id="@+id/Email"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_centerHorizontal="true"
-        android:layout_centerVertical="true"
         android:ems="15"
         android:inputType="textEmailAddress"
-        android:hint="Email" />
+        android:hint="Email"
+        android:layout_above="@id/Senha"
+        android:backgroundTint="@color/blueSky"/>
     <EditText
         android:id="@+id/Senha"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_centerHorizontal="true"
         android:layout_centerVertical="true"
-        android:layout_below="@id/Email"
         android:ems="15"
         android:inputType="textPassword"
         android:hint="Senha"
-        android:layout_marginTop="30dp" />
+        android:layout_marginTop="30dp"
+        android:backgroundTint="@color/blueSky"/>
     <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -32,14 +34,10 @@
         android:layout_alignEnd="@id/Senha"
         android:layout_marginTop="30dp"
         android:text="Criar Conta"
-        android:onClick="criarConta"/>
-    <Button
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/Senha"
-        android:layout_alignStart="@id/Senha"
-        android:layout_marginTop="30dp"
-        android:text="Continuar sem conta"
-        android:onClick="continuarSemConta"/>
+        android:onClick="criarConta"
+        android:textColor="@color/blueSky"
+        android:background="@drawable/button"
+        android:layout_centerHorizontal="true"
+        style="?android:attr/borderlessButtonStyle"/>
 
 </RelativeLayout>

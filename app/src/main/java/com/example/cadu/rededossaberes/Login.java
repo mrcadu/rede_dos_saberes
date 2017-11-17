@@ -21,7 +21,7 @@ public class Login extends AppCompatActivity {
         LoginActionBean loginController = new LoginActionBean();
         EditText email = (EditText) findViewById(R.id.Email);
         EditText senha = (EditText) findViewById(R.id.Senha);
-        loginController.criarContaLogando(email.getText().toString(),senha.getText().toString());
+        loginController.criarContaComEmailESenha(email.getText().toString(),senha.getText().toString());
         Intent mudarActivityVerProjetos = new Intent(this,VerProjetos.class);
         startActivity(mudarActivityVerProjetos);
     }
