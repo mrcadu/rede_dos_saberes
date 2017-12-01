@@ -13,6 +13,7 @@
         android:visibility="visible"
         android:layout_alignParentTop="true"
         android:layout_above="@id/primeiroBotao" />
+
     <TextView
         android:id="@+id/rededossaberes"
         android:layout_width="match_parent"
@@ -72,7 +73,8 @@
         android:text="Sair"
         android:textColor="@color/blueSky"
         android:textSize="19sp"
-        style="?android:attr/borderlessButtonStyle"/>
+        style="?android:attr/borderlessButtonStyle"
+        android:onClick="sair"/>
     <View
         android:id="@+id/linhaHorizontal"
         android:layout_width="wrap_content"

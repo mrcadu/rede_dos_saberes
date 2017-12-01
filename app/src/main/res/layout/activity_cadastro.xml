@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.example.cadu.rededossaberes.Cadastro"
+    android:background="@color/white">
+
+    <EditText
+        android:id="@+id/Email"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:ems="15"
+        android:inputType="textEmailAddress"
+        android:hint="Email"
+        android:layout_above="@id/Senha"
+        android:layout_marginBottom="10dp"
+        android:backgroundTint="@color/blueSky"/>
+    <EditText
+        android:id="@+id/Senha"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:ems="15"
+        android:inputType="textPassword"
+        android:hint="Senha"
+        android:layout_above="@id/confirmaSenha"
+        android:backgroundTint="@color/blueSky"/>
+    <EditText
+        android:id="@+id/confirmaSenha"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:ems="15"
+        android:inputType="textPassword"
+        android:hint="Confirma a senha"
+        android:layout_above="@id/criarConta"
+        android:layout_marginTop="10dp"
+        android:backgroundTint="@color/blueSky"/>
+
+    <Button
+        style="?android:attr/borderlessButtonStyle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignEnd="@id/Senha"
+        android:layout_alignStart="@+id/Senha"
+        android:layout_marginTop="30dp"
+        android:layout_centerVertical="true"
+        android:background="@drawable/login_button"
+        android:onClick="criarConta"
+        android:text="Criar Conta"
+        android:textColor="@color/white"
+        android:id="@+id/criarConta" />
+    <Button
+        style="?android:attr/borderlessButtonStyle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignEnd="@id/Senha"
+        android:layout_alignStart="@+id/Senha"
+        android:layout_below="@id/criarConta"
+        android:background="@drawable/facebook"
+        android:onClick="criarConta"
+        android:text="Logar com Facebook"
+        android:textColor="@color/white"
+        android:id="@+id/criarContaFacebook" />
+    <Button
+        style="?android:attr/borderlessButtonStyle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignEnd="@id/Senha"
+        android:layout_alignStart="@+id/Senha"
+        android:layout_below="@id/criarContaFacebook"
+        android:background="@drawable/google"
+        android:onClick="criarConta"
+        android:text="Logar com Google"
+        android:textColor="@color/white"
+        android:id="@+id/criarContaGoogle" />
+
+    <TextView
+        android:id="@+id/loginSemConta"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignEnd="@+id/Senha"
+        android:layout_below="@+id/confirmaSenha"
+        android:text="@string/continuar_sem_login"
+        android:textColor="@color/blueSky"
+        android:onClick="continuarSemConta"/>
+    <TextView
+        android:id="@+id/contaJaExistente"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignStart="@+id/Senha"
+        android:layout_below="@+id/confirmaSenha"
+        android:text="@string/ja_possui_conta"
+        android:onClick="fazerLogin"
+        android:textColor="@color/blueSky" />
+
+
+</RelativeLayout>

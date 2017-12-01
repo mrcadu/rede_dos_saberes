@@ -1,28 +1,27 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="fill_parent"
-    android:layout_height="fill_parent">
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="55dip"
+    android:orientation="vertical" >
 
-    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="vertical"
-        android:paddingLeft="16dp"
-        android:paddingRight="16dp"
-        android:background="@drawable/step">
-
-        <EditText
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:backgroundTint="@color/blueSky"
-            android:hint="Passo 1. Ex: materiais e ingredientes"
-            android:inputType="textMultiLine" />
-
-        <ImageButton
-            android:layout_width="50dp"
-            android:layout_height="wrap_content"
-            android:background="@color/white"
-            android:src="@drawable/gallery"
-            android:layout_marginBottom="30dp"/>
-    </LinearLayout>
-</ScrollView>
+    <TextView
+        android:id="@+id/lblListItem"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:textSize="17sp"
+        android:paddingTop="5dp"
+        android:paddingBottom="5dp"
+        android:paddingLeft="?android:attr/expandableListPreferredChildPaddingLeft"
+        android:textColor="@color/blueSky"/>
+    <Button
+        android:id="@+id/delButton"
+        android:layout_width="50px"
+        android:layout_height="50px"
+        android:background="@drawable/remove"
+        android:focusable="false"
+        android:textColor="@color/blueSky"
+        android:layout_alignStart="@+id/lblListItem"
+        android:layout_centerVertical="true"
+        android:layout_marginLeft="10dp"
+        android:onClick="removeChildStep"/>
+</RelativeLayout>

@@ -7,4 +7,9 @@
     <string name="primeiro_botao">Ver Projetos</string>
     <string name="segundo_botao">Criar Projetos</string>
     <string name="terceiro_botao">Sair</string>
+    <string name="continuar_sem_login">Continuar sem Login</string>
+    <string name="ja_possui_conta">Já possui Conta?</string>
+    <string name="parse_server_url">http://35.196.17.31:1337/parse/</string>
+    <string name="parse_app_id">rdsParseServer</string>
+    <string name = "enviar">enviar</string>
 </resources>

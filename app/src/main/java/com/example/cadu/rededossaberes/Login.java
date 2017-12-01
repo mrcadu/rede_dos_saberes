@@ -3,10 +3,13 @@ package com.example.cadu.rededossaberes;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
-import android.widget.EditText;
+import android.widget.TextView;
 
-import com.example.cadu.login.LoginActionBean;
+import com.parse.LogInCallback;
+import com.parse.ParseException;
+import com.parse.ParseUser;
 
 public class Login extends AppCompatActivity {
 
@@ -16,18 +19,34 @@ public class Login extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
     }
-    public void criarConta(View view)
+    public void logar(View view)
     {
-        LoginActionBean loginController = new LoginActionBean();
-        EditText email = (EditText) findViewById(R.id.Email);
-        EditText senha = (EditText) findViewById(R.id.Senha);
-        loginController.criarContaComEmailESenha(email.getText().toString(),senha.getText().toString());
-        Intent mudarActivityVerProjetos = new Intent(this,VerProjetos.class);
-        startActivity(mudarActivityVerProjetos);
+        TextView username = findViewById(R.id.username);
+        TextView senha = findViewById(R.id.Senha);
+        ParseUser.logInInBackground(username.getText().toString(), senha.getText().toString(), new LogInCallback() {
+            @Override
+            public void done(ParseUser user, ParseException e)
+            {
+                if(e == null)
+                {
+                    Log.i("Login", "login realizado com sucesso");
+                    if(TelaInicial.telaOrigem == "verProjetos")
+                    {
+                        Intent mudarActivityVerProjetos = new Intent(Login.this,VerProjetos.class);
+                        startActivity(mudarActivityVerProjetos);
+                    }
+                    else
+                    {
+                        Intent mudarActivityCriarProjetos = new Intent(Login.this,CriarProjetos.class);
+                        startActivity(mudarActivityCriarProjetos);
+                    }
+                }
+                else
+                {
+                    Log.i("Login","Erro de login - " + e.getMessage());
+                }
+            }
+        });
     }
-    public void continuarSemConta(View view)
-    {
-        Intent mudarActivityVerProjetos = new Intent(this,VerProjetos.class);
-        startActivity(mudarActivityVerProjetos);
-    }
+
 }

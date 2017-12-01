@@ -1,21 +1,22 @@
 package com.example.cadu.rededossaberes;
 
 import android.content.Intent;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.view.MenuInflater;
 import android.view.Menu;
 import android.view.View;
-import android.widget.PopupWindow;
-
-import com.example.cadu.login.LoginActionBean;
+import com.parse.Parse;
+import com.parse.ParseUser;
 
 public class TelaInicial extends AppCompatActivity {
+    public static String telaOrigem;
     @Override
     protected void onCreate(Bundle savedInstanceState)
     {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_tela_inicial);
+        Parse.initialize(this);
     }
     @Override
     public boolean onCreateOptionsMenu(Menu menu)
@@ -32,14 +33,11 @@ public class TelaInicial extends AppCompatActivity {
     }
     public void verProjetos(View view)
     {
-
-       LoginActionBean loginActionBean = new LoginActionBean();
-        if(!loginActionBean.isUsuarioLogado())
+        if(ParseUser.getCurrentUser() == null)
         {
-
-            Intent mudarActivityLogin = new Intent(this,Login.class);
-            startActivity(mudarActivityLogin);
-            PopupWindow popUpView = new PopupWindow(100,100);
+            Intent mudarActivityCadastro = new Intent(this,Cadastro.class);
+            telaOrigem = "verProjetos";
+            startActivity(mudarActivityCadastro);
         }
         else
         {
@@ -49,7 +47,20 @@ public class TelaInicial extends AppCompatActivity {
     }
     public void criarProjetos(View view)
     {
-        Intent mudarActivityCriarProjetos = new Intent (this, CriarProjetos.class);
-        startActivity(mudarActivityCriarProjetos);
+        if(ParseUser.getCurrentUser() == null)
+        {
+            Intent mudarActivityCadastro = new Intent(this,Cadastro.class);
+            telaOrigem = "criarProjetos";
+            startActivity(mudarActivityCadastro);
+        }
+        else {
+            Intent mudarActivityCriarProjetos = new Intent(this, CriarProjetos.class);
+            startActivity(mudarActivityCriarProjetos);
+        }
+    }
+    public void sair(View view)
+    {
+
+        ParseUser.logOut();
     }
 }

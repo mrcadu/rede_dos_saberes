@@ -15,10 +15,17 @@
     <application
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
-        android:label=""
+        android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
+        <meta-data
+            android:name="com.parse.SERVER_URL"
+            android:value="@string/parse_server_url" />
+        <meta-data
+            android:name="com.parse.APPLICATION_ID"
+            android:value="@string/parse_app_id" />
+
         <activity android:name=".TelaInicial">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -28,8 +35,11 @@
         </activity>
         <activity android:name=".VerProjetos" />
         <activity android:name=".CriarProjetos" />
+        <activity android:name=".Cadastro" />
+        <activity android:name=".Step" />
+        android:name=".App"
         <activity android:name=".Login" />
-        <activity android:name=".Step"></activity>
+        <activity android:name=".GroupStep"></activity>
     </application>
 
 </manifest>
