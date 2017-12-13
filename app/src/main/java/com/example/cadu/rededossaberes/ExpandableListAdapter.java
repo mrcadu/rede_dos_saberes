@@ -1,96 +1,53 @@
 package com.example.cadu.rededossaberes;
 
-import java.util.HashMap;
 import java.util.List;
 import android.content.Context;
-import android.graphics.Typeface;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseExpandableListAdapter;
 import android.widget.TextView;
 
-public class ExpandableListAdapter extends BaseExpandableListAdapter
-{
-    private Context _context;
-    private List<String> _listDataHeader; // header titles
-    // child data in format of header title, child title
-    private HashMap<String, List<String>> _listDataChild;
+public class ExpandableListAdapter extends BaseExpandableListAdapter {
+    Context context;
+    List<ParentExpandableView> parentExpandableViews;
 
-    public ExpandableListAdapter(Context context, List<String> listDataHeader,
-                                 HashMap<String, List<String>> listChildData) {
-        this._context = context;
-        this._listDataHeader = listDataHeader;
-        this._listDataChild = listChildData;
+    public ExpandableListAdapter(Context context, List<ParentExpandableView> parentExpandableViews)
+    {
+        this.context = context;
+        this.parentExpandableViews = parentExpandableViews;
     }
-
-    @Override
-    public Object getChild(int groupPosition, int childPosititon) {
-        return this._listDataChild.get(this._listDataHeader.get(groupPosition))
-                .get(childPosititon);
-    }
-
-    @Override
-    public long getChildId(int groupPosition, int childPosition) {
-        return childPosition;
-    }
-
-    @Override
-    public View getChildView(int groupPosition, final int childPosition,
-                             boolean isLastChild, View convertView, ViewGroup parent) {
-
-        final String childText = (String) getChild(groupPosition, childPosition);
-
-        if (convertView == null) {
-            LayoutInflater infalInflater = (LayoutInflater) this._context
-                    .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-            convertView = infalInflater.inflate(R.layout.activity_step, null);
-        }
-
-        TextView txtListChild = (TextView) convertView
-                .findViewById(R.id.lblListItem);
-
-        txtListChild.setText(childText);
-        return convertView;
-    }
-
-    @Override
-    public int getChildrenCount(int groupPosition) {
-        return this._listDataChild.get(this._listDataHeader.get(groupPosition))
-                .size();
-    }
-
-    @Override
-    public Object getGroup(int groupPosition) {
-        return this._listDataHeader.get(groupPosition);
-    }
-
     @Override
     public int getGroupCount() {
-        return this._listDataHeader.size();
+        return parentExpandableViews.size();
+    }
+
+    //Add 2 to childcount. The first row and the last row are used as header and footer to childview
+    @Override
+    public int getChildrenCount(int i) {
+        return parentExpandableViews.get(i).getChildObjects().size() +2;
     }
 
     @Override
-    public long getGroupId(int groupPosition) {
-        return groupPosition;
+    public ParentExpandableView getGroup(int i)
+    {
+        return parentExpandableViews.get(i);
     }
 
     @Override
-    public View getGroupView(int groupPosition, boolean isExpanded,
-                             View convertView, ViewGroup parent) {
-        String headerTitle = (String) getGroup(groupPosition);
-        if (convertView == null) {
-            LayoutInflater infalInflater = (LayoutInflater) this._context
-                    .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-            convertView = infalInflater.inflate(R.layout.activity_group_step, null);
-        }
+    public ChildExpandableView getChild(int i, int i2)
+    {
+        return parentExpandableViews.get(i).getChildObjects().get(i2);
+    }
 
-        TextView lblListHeader = (TextView) convertView
-                .findViewById(R.id.lblListHeader);
-        lblListHeader.setTypeface(null, Typeface.BOLD);
-        lblListHeader.setText(headerTitle);
+    @Override
+    public long getGroupId(int i) {
+        return i;
+    }
 
-        return convertView;
+    @Override
+    public long getChildId(int i, int i2) {
+        return 0;
     }
 
     @Override
@@ -99,7 +56,40 @@ public class ExpandableListAdapter extends BaseExpandableListAdapter
     }
 
     @Override
-    public boolean isChildSelectable(int groupPosition, int childPosition) {
-        return true;
+    public View getGroupView(int i, boolean b, View view, ViewGroup viewGroup)
+    {
+        ParentExpandableView currentParent = parentExpandableViews.get(i);
+        if(view ==null)
+        {
+            LayoutInflater inflater =(LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+            view = inflater.inflate(R.layout.activity_group_step,null);
+        }
+        TextView descriptionParent = (TextView) view.findViewById(R.id.lblListHeader);
+        descriptionParent.setText(currentParent.getDescription());
+        return view;
+    }
+
+    @Override
+    public View getChildView(int groupPosition, int childPosition, boolean b, View view, ViewGroup viewGroup) {
+        ParentExpandableView currentParent = getGroup(groupPosition);
+        LayoutInflater inflater = (LayoutInflater)context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+        if(childPosition>=0 && childPosition<getChildrenCount(groupPosition)-1)
+        {
+            ChildExpandableView currentChild = getChild(groupPosition,childPosition-1);
+            view = inflater.inflate(R.layout.activity_step,null);
+            TextView descriptionChild = (TextView)view.findViewById(R.id.lblListItem);
+            descriptionChild.setText(currentChild.getDescription());
+        }
+        //the last row is used as footer
+        if(childPosition == getChildrenCount(groupPosition)-1)
+        {
+            view = inflater.inflate(R.layout.activity_last_child,null);
+        }
+        return view;
+    }
+
+    @Override
+    public boolean isChildSelectable(int i, int i2) {
+        return false;
     }
 }

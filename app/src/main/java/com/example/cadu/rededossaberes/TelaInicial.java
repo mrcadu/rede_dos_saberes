@@ -19,13 +19,6 @@ public class TelaInicial extends AppCompatActivity {
         Parse.initialize(this);
     }
     @Override
-    public boolean onCreateOptionsMenu(Menu menu)
-    {
-        MenuInflater inflater = getMenuInflater();
-        inflater.inflate(R.menu.menu_buttons, menu);
-        return true;
-    }
-    @Override
     public void onStart()
     {
 
