@@ -19,6 +19,6 @@
         android:layout_alignParentEnd="true"
         android:background="@drawable/button_all_collored"
         android:textColor="@color/white"
-        android:text="@string/enviar"/>
+        android:text="@string/adicionar"/>
 
 </RelativeLayout>

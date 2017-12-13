@@ -22,4 +22,6 @@
     <string name="confirmar">Confirme a Senha</string>
     <string name="apelido">Apelido</string>
     <string name="remover">remover passo</string>
+    <string name="adicionar">Adicionar</string>
+    <string name="adicionarPasso">Adicionar Passo</string>
 </resources>
