@@ -4,7 +4,7 @@
     android:layout_height="wrap_content"
     android:orientation="vertical"
     android:padding="8dp"
-    android:background="@android:color/white">
+    android:background="@color/blueSky">
         <TextView
             android:id="@+id/lblListHeader"
             android:layout_width="match_parent"
@@ -12,6 +12,6 @@
             android:paddingLeft="?android:attr/expandableListPreferredItemPaddingLeft"
             android:textSize="17dp"
             android:textColor="@android:color/white"
-            android:background="@drawable/button_all_collored"/>
+            android:background="@color/blueSky"/>
 
 </RelativeLayout>

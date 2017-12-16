@@ -21,11 +21,9 @@ public class ExpandableListAdapter extends BaseExpandableListAdapter {
     public int getGroupCount() {
         return parentExpandableViews.size();
     }
-
-    //Add 2 to childcount. The first row and the last row are used as header and footer to childview
     @Override
     public int getChildrenCount(int i) {
-        return parentExpandableViews.get(i).getChildObjects().size() +1;
+        return parentExpandableViews.get(i).getChildObjects().size() + 2;
     }
 
     @Override
@@ -73,12 +71,19 @@ public class ExpandableListAdapter extends BaseExpandableListAdapter {
     public View getChildView(int groupPosition, int childPosition, boolean b, View view, ViewGroup viewGroup) {
         ParentExpandableView currentParent = getGroup(groupPosition);
         LayoutInflater inflater = (LayoutInflater)context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-        if(childPosition>=0 && childPosition<getChildrenCount(groupPosition)-1)
+        //the first row is used as header
+        if(childPosition ==0)
         {
-            ChildExpandableView currentChild = getChild(groupPosition,childPosition);
+            view = inflater.inflate(R.layout.activity_header, null);
+        }
+
+        //Here is the ListView of the ChildView
+        if(childPosition>0 && childPosition<getChildrenCount(groupPosition)-1)
+        {
+            ChildExpandableView currentChild = getChild(groupPosition,childPosition-1);
             view = inflater.inflate(R.layout.activity_step,null);
-            TextView descriptionChild = (TextView)view.findViewById(R.id.lblListItem);
-            descriptionChild.setText(currentChild.getDescription());
+            TextView description = (TextView) view.findViewById(R.id.lblListItem);
+            description.setText(currentChild.getDescription());
         }
         //the last row is used as footer
         if(childPosition == getChildrenCount(groupPosition)-1)
@@ -90,6 +95,6 @@ public class ExpandableListAdapter extends BaseExpandableListAdapter {
 
     @Override
     public boolean isChildSelectable(int i, int i2) {
-        return false;
+        return true;
     }
 }

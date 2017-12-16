@@ -2,15 +2,21 @@ package com.example.cadu.rededossaberes;
 
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.text.InputType;
 import android.view.LayoutInflater;
+import android.view.View;
 import android.widget.ExpandableListView;
+import android.widget.TextView;
+
 import java.util.ArrayList;
 import java.util.List;
 
 public class CriarProjetos extends AppCompatActivity {
     ExpandableListView expandableListView;
     List<ParentExpandableView> parentObjects = new ArrayList<>();
-
+    int currentParent;
+    String perspective;
+    final ExpandableListAdapter adapter = new ExpandableListAdapter(this, getData());
     @Override
     protected void onCreate(Bundle savedInstanceState)
     {
@@ -19,8 +25,37 @@ public class CriarProjetos extends AppCompatActivity {
         LayoutInflater inflater = getLayoutInflater();
         expandableListView = (ExpandableListView)findViewById(R.id.lvExp);
         expandableListView.setOnGroupExpandListener(onGroupExpandListenser);
-        ExpandableListAdapter adapter = new ExpandableListAdapter(this, getData());
         expandableListView.setAdapter(adapter);
+        expandableListView.setOnChildClickListener(new ExpandableListView.OnChildClickListener() {
+            @Override
+            public boolean onChildClick(ExpandableListView expandableListView, View view, int i, int i1, long l)
+            {
+                if(perspective!=null) {
+                    if (perspective.equals("remove")) {
+                        List<ChildExpandableView> childs = parentObjects.get(i).getChildObjects();
+                        childs.remove(i1 - 1);
+                        adapter.notifyDataSetChanged();
+                        perspective = "";
+                    }
+                    if(perspective.equals("edit"))
+                    {
+                        TextView currentView = (TextView) view.findViewById(R.id.lblListItem);
+                        currentView.setCursorVisible(true);
+                        currentView.setFocusableInTouchMode(true);
+                        currentView.setInputType(InputType.TYPE_CLASS_TEXT);
+                        currentView.requestFocus();
+                    }
+                }
+                return false;
+            }
+        });
+        expandableListView.setOnGroupClickListener(new ExpandableListView.OnGroupClickListener() {
+            @Override
+            public boolean onGroupClick(ExpandableListView expandableListView, View view, int i, long l) {
+                currentParent = i;
+                return false;
+            }
+        });
     }
 
     ExpandableListView.OnGroupExpandListener onGroupExpandListenser = new ExpandableListView.OnGroupExpandListener()
@@ -39,7 +74,7 @@ public class CriarProjetos extends AppCompatActivity {
     {
         ChildExpandableView childExpandableView1;
 
-        addParent("Ingredientes, materiais e instrumentos","feijão");
+        addParent("Ingredientes, materiais e instrumentos","Feijão");
         addParent("Primeiras instruções","Cozinhe o feijão");
         addParent("Acabamentos e exibição","Comer o feijão");
 
@@ -110,5 +145,30 @@ public class CriarProjetos extends AppCompatActivity {
                 }
             }
         }
+    }
+    public void removerParent(View view)
+    {
+        parentObjects.remove(currentParent);
+        adapter.notifyDataSetChanged();
+    }
+    public void adicionarChild(View view)
+    {
+        ChildExpandableView newChild = new ChildExpandableView("");
+        parentObjects.get(currentParent).getChildObjects().add(newChild);
+        adapter.notifyDataSetChanged();
+    }
+    public void editarChild(View view)
+    {
+        perspective = "edit";
+    }
+    public void excluirChild(View view)
+    {
+        perspective = "remove";
+    }
+    public void adicionarParent(View view)
+    {
+        ParentExpandableView newParent = new ParentExpandableView("Step" + (parentObjects.size() + 1));
+        parentObjects.add(newParent);
+        adapter.notifyDataSetChanged();
     }
 }

@@ -40,7 +40,8 @@
         android:name=".App"
         <activity android:name=".Login" />
         <activity android:name=".GroupStep" />
-        <activity android:name=".LastChild"></activity>
+        <activity android:name=".LastChild" />
+        <activity android:name=".header"></activity>
     </application>
 
 </manifest>
