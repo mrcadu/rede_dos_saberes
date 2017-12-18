@@ -41,7 +41,8 @@
         <activity android:name=".Login" />
         <activity android:name=".GroupStep" />
         <activity android:name=".LastChild" />
-        <activity android:name=".header"></activity>
+        <activity android:name=".header" />
+        <activity android:name=".InputText"></activity>
     </application>
 
 </manifest>

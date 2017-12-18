@@ -13,5 +13,14 @@
             android:textSize="17dp"
             android:textColor="@android:color/white"
             android:background="@color/blueSky"/>
+        <EditText
+            android:id="@+id/lblListHeaderEditable"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingLeft="?android:attr/expandableListPreferredItemPaddingLeft"
+            android:textSize="17dp"
+            android:textColor="@android:color/white"
+            android:background="@color/blueSky"
+            android:visibility="gone"/>
 
 </RelativeLayout>

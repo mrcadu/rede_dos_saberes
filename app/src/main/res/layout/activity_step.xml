@@ -4,7 +4,7 @@
     android:layout_height="55dip"
     android:orientation="vertical" >
 
-    <EditText
+    <TextView
         android:backgroundTint="@color/white"
         android:id="@+id/lblListItem"
         android:layout_width="fill_parent"
@@ -12,9 +12,17 @@
         android:textSize="17sp"
         android:paddingTop="5dp"
         android:paddingBottom="5dp"
-        android:focusable="false"
-        android:clickable="true"
-        android:longClickable="false"
+        android:paddingLeft="?android:attr/expandableListPreferredChildPaddingLeft"
+        android:textColor="@android:color/darker_gray" />
+    <EditText
+        android:backgroundTint="@color/white"
+        android:id="@+id/lblListItemEditable"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:textSize="17sp"
+        android:paddingTop="5dp"
+        android:paddingBottom="5dp"
+        android:visibility="gone"
         android:paddingLeft="?android:attr/expandableListPreferredChildPaddingLeft"
         android:textColor="@android:color/darker_gray"/>
 </RelativeLayout>

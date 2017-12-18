@@ -1,20 +1,32 @@
 package com.example.cadu.rededossaberes;
 
+import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.text.InputType;
+import android.view.KeyEvent;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
+import android.view.inputmethod.InputMethodManager;
+import android.widget.EditText;
 import android.widget.ExpandableListView;
 import android.widget.TextView;
 
+import com.parse.ParseUser;
+
 import java.util.ArrayList;
 import java.util.List;
+import java.util.zip.Inflater;
 
 public class CriarProjetos extends AppCompatActivity {
     ExpandableListView expandableListView;
     List<ParentExpandableView> parentObjects = new ArrayList<>();
     int currentParent;
+    int currentChild;
     String perspective;
     final ExpandableListAdapter adapter = new ExpandableListAdapter(this, getData());
     @Override
@@ -30,23 +42,42 @@ public class CriarProjetos extends AppCompatActivity {
             @Override
             public boolean onChildClick(ExpandableListView expandableListView, View view, int i, int i1, long l)
             {
+                currentChild = i1 - 1;
                 if(perspective!=null) {
                     if (perspective.equals("remove")) {
                         List<ChildExpandableView> childs = parentObjects.get(i).getChildObjects();
-                        childs.remove(i1 - 1);
+                        childs.remove(currentChild);
                         adapter.notifyDataSetChanged();
                         perspective = "";
                     }
                     if(perspective.equals("edit"))
                     {
-                        TextView currentView = (TextView) view.findViewById(R.id.lblListItem);
-                        currentView.setCursorVisible(true);
-                        currentView.setFocusableInTouchMode(true);
-                        currentView.setInputType(InputType.TYPE_CLASS_TEXT);
-                        currentView.requestFocus();
+                        final EditText editableItem = view.findViewById(R.id.lblListItemEditable);
+                        editableItem.setVisibility(View.VISIBLE);
+                        view.findViewById(R.id.lblListItem).setVisibility(View.GONE);
+                        editableItem.requestFocus();
+                        InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+                        imm.showSoftInput(editableItem, InputMethodManager.SHOW_IMPLICIT);
+                        editableItem.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+                            @Override
+                            public void onFocusChange(View view, boolean b) {
+                                if(!b)
+                                {
+                                    parentObjects.get(currentParent).getChildObjects().get(currentChild).setDescription(editableItem.getText().toString());
+                                }
+                            }
+                        });
+                        perspective = "";
                     }
                 }
                 return false;
+            }
+        });
+        expandableListView.setOnGroupExpandListener(new ExpandableListView.OnGroupExpandListener() {
+            @Override
+            public void onGroupExpand(int i)
+            {
+                parentObjects.get(i);
             }
         });
         expandableListView.setOnGroupClickListener(new ExpandableListView.OnGroupClickListener() {
@@ -56,6 +87,25 @@ public class CriarProjetos extends AppCompatActivity {
                 return false;
             }
         });
+    }
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu)
+    {
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.menu_buttons, menu);
+        return true;
+    }
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch ( item.getItemId() )
+        {
+            case R.id.action_sair:
+                ParseUser.logOut();
+                Intent mudarActivityLogin = new Intent(CriarProjetos.this,Login.class);
+                startActivity(mudarActivityLogin);
+            default:
+                return super.onOptionsItemSelected(item);
+        }
     }
 
     ExpandableListView.OnGroupExpandListener onGroupExpandListenser = new ExpandableListView.OnGroupExpandListener()
@@ -170,5 +220,7 @@ public class CriarProjetos extends AppCompatActivity {
         ParentExpandableView newParent = new ParentExpandableView("Step" + (parentObjects.size() + 1));
         parentObjects.add(newParent);
         adapter.notifyDataSetChanged();
+        LayoutInflater inflater = getLayoutInflater();
+
     }
 }

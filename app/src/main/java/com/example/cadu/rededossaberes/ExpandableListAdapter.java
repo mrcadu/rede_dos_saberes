@@ -6,6 +6,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseExpandableListAdapter;
+import android.widget.EditText;
 import android.widget.TextView;
 
 public class ExpandableListAdapter extends BaseExpandableListAdapter {
@@ -63,7 +64,9 @@ public class ExpandableListAdapter extends BaseExpandableListAdapter {
             view = inflater.inflate(R.layout.activity_group_step,null);
         }
         TextView descriptionParent = (TextView) view.findViewById(R.id.lblListHeader);
+        EditText descriptionParentEditable = view.findViewById(R.id.lblListHeaderEditable);
         descriptionParent.setText(currentParent.getDescription());
+        descriptionParentEditable.setText(currentParent.getDescription());
         return view;
     }
 
@@ -83,7 +86,9 @@ public class ExpandableListAdapter extends BaseExpandableListAdapter {
             ChildExpandableView currentChild = getChild(groupPosition,childPosition-1);
             view = inflater.inflate(R.layout.activity_step,null);
             TextView description = (TextView) view.findViewById(R.id.lblListItem);
+            EditText descriptionEditable = (EditText) view.findViewById(R.id.lblListItemEditable);
             description.setText(currentChild.getDescription());
+            descriptionEditable.setText(currentChild.getDescription());
         }
         //the last row is used as footer
         if(childPosition == getChildrenCount(groupPosition)-1)
