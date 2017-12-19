@@ -24,4 +24,5 @@
     <string name="remover">remover passo</string>
     <string name="adicionar">Adicionar</string>
     <string name="adicionarPasso">Adicionar Passo</string>
+    <string name="confirmarParent">Confirmar</string>
 </resources>

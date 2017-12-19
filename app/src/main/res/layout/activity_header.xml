@@ -18,7 +18,8 @@
         android:layout_toRightOf="@id/botaoAdicionar"
         android:layout_width="55px"
         android:layout_height="55px"
-        android:background="@drawable/ic_crop_original"/>
+        android:background="@drawable/ic_crop_original"
+        android:onClick="adicionarFoto"/>
     <Button
         android:id="@+id/botaoRemover"
         android:layout_marginLeft="20px"

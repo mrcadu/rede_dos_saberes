@@ -3,9 +3,9 @@ package com.example.cadu.rededossaberes;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.provider.MediaStore;
+import android.support.v4.app.FragmentManager;
 import android.support.v7.app.AppCompatActivity;
-import android.text.InputType;
-import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -14,79 +14,72 @@ import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 import android.widget.ExpandableListView;
-import android.widget.TextView;
-
 import com.parse.ParseUser;
-
 import java.util.ArrayList;
 import java.util.List;
-import java.util.zip.Inflater;
 
-public class CriarProjetos extends AppCompatActivity {
+public class CriarProjetos extends AppCompatActivity{
     ExpandableListView expandableListView;
-    List<ParentExpandableView> parentObjects = new ArrayList<>();
+    static List<ParentExpandableView> parentObjects = new ArrayList<>();
     int currentParent;
     int currentChild;
     String perspective;
     final ExpandableListAdapter adapter = new ExpandableListAdapter(this, getData());
+    FragmentManager manager = getSupportFragmentManager();
     @Override
     protected void onCreate(Bundle savedInstanceState)
     {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_criar_projetos);
         LayoutInflater inflater = getLayoutInflater();
-        expandableListView = (ExpandableListView)findViewById(R.id.lvExp);
-        expandableListView.setOnGroupExpandListener(onGroupExpandListenser);
-        expandableListView.setAdapter(adapter);
-        expandableListView.setOnChildClickListener(new ExpandableListView.OnChildClickListener() {
-            @Override
-            public boolean onChildClick(ExpandableListView expandableListView, View view, int i, int i1, long l)
-            {
-                currentChild = i1 - 1;
-                if(perspective!=null) {
-                    if (perspective.equals("remove")) {
-                        List<ChildExpandableView> childs = parentObjects.get(i).getChildObjects();
-                        childs.remove(currentChild);
-                        adapter.notifyDataSetChanged();
-                        perspective = "";
-                    }
-                    if(perspective.equals("edit"))
-                    {
-                        final EditText editableItem = view.findViewById(R.id.lblListItemEditable);
-                        editableItem.setVisibility(View.VISIBLE);
-                        view.findViewById(R.id.lblListItem).setVisibility(View.GONE);
-                        editableItem.requestFocus();
-                        InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
-                        imm.showSoftInput(editableItem, InputMethodManager.SHOW_IMPLICIT);
-                        editableItem.setOnFocusChangeListener(new View.OnFocusChangeListener() {
-                            @Override
-                            public void onFocusChange(View view, boolean b) {
-                                if(!b)
-                                {
-                                    parentObjects.get(currentParent).getChildObjects().get(currentChild).setDescription(editableItem.getText().toString());
+            expandableListView = (ExpandableListView) findViewById(R.id.lvExp);
+            expandableListView.setOnGroupExpandListener(onGroupExpandListenser);
+            expandableListView.setAdapter(adapter);
+            expandableListView.setOnChildClickListener(new ExpandableListView.OnChildClickListener() {
+                @Override
+                public boolean onChildClick(ExpandableListView expandableListView, View view, int i, int i1, long l) {
+                    currentChild = i1 - 1;
+                    if (perspective != null) {
+                        if (perspective.equals("remove")) {
+                            List<ChildExpandableView> childs = parentObjects.get(i).getChildObjects();
+                            childs.remove(currentChild);
+                            adapter.notifyDataSetChanged();
+                            perspective = "";
+                        }
+                        if (perspective.equals("edit")) {
+                            final EditText editableItem = view.findViewById(R.id.lblListItemEditable);
+                            editableItem.setVisibility(View.VISIBLE);
+                            view.findViewById(R.id.lblListItem).setVisibility(View.GONE);
+                            editableItem.requestFocus();
+                            InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+                            imm.showSoftInput(editableItem, InputMethodManager.SHOW_IMPLICIT);
+                            editableItem.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+                                @Override
+                                public void onFocusChange(View view, boolean b) {
+                                    if (!b) {
+                                        parentObjects.get(currentParent).getChildObjects().get(currentChild).setDescription(editableItem.getText().toString());
+                                    }
                                 }
-                            }
-                        });
-                        perspective = "";
+                            });
+                            perspective = "";
+                        }
                     }
+                    return false;
                 }
-                return false;
-            }
-        });
-        expandableListView.setOnGroupExpandListener(new ExpandableListView.OnGroupExpandListener() {
-            @Override
-            public void onGroupExpand(int i)
-            {
-                parentObjects.get(i);
-            }
-        });
-        expandableListView.setOnGroupClickListener(new ExpandableListView.OnGroupClickListener() {
-            @Override
-            public boolean onGroupClick(ExpandableListView expandableListView, View view, int i, long l) {
-                currentParent = i;
-                return false;
-            }
-        });
+            });
+            expandableListView.setOnGroupExpandListener(new ExpandableListView.OnGroupExpandListener() {
+                @Override
+                public void onGroupExpand(int i) {
+                    parentObjects.get(i);
+                }
+            });
+            expandableListView.setOnGroupClickListener(new ExpandableListView.OnGroupClickListener() {
+                @Override
+                public boolean onGroupClick(ExpandableListView expandableListView, View view, int i, long l) {
+                    currentParent = i;
+                    return false;
+                }
+            });
     }
     @Override
     public boolean onCreateOptionsMenu(Menu menu)
@@ -122,21 +115,23 @@ public class CriarProjetos extends AppCompatActivity {
     //Sample data for expandable list view.
     public List<ParentExpandableView> getData()
     {
-        ChildExpandableView childExpandableView1;
+        if(parentObjects.size()==0)
+        {
+            ChildExpandableView childExpandableView1;
 
-        addParent("Ingredientes, materiais e instrumentos","Feijão");
-        addParent("Primeiras instruções","Cozinhe o feijão");
-        addParent("Acabamentos e exibição","Comer o feijão");
+            addParent("Ingredientes, materiais e instrumentos", "Feijão");
+            addParent("Primeiras instruções", "Cozinhe o feijão");
+            addParent("Acabamentos e exibição", "Comer o feijão");
 
         /*Primeiro parent*/
-        addChild(parentObjects.get(0),"Arroz");
+            addChild(parentObjects.get(0), "Arroz");
 
         /*Segundo parent*/
-        addChild(parentObjects.get(1),"Cozinhe o arroz");
+            addChild(parentObjects.get(1), "Cozinhe o arroz");
 
         /*Terceiro parent*/
-        addChild(parentObjects.get(2),"Comer o arroz");
-
+            addChild(parentObjects.get(2), "Comer o arroz");
+        }
         return parentObjects;
     }
 
@@ -215,12 +210,35 @@ public class CriarProjetos extends AppCompatActivity {
     {
         perspective = "remove";
     }
-    public void adicionarParent(View view)
-    {
-        ParentExpandableView newParent = new ParentExpandableView("Step" + (parentObjects.size() + 1));
+    public void adicionarParent(View view) {
+        InputTextManager dFragment = new InputTextManager();
+        ParentExpandableView newParent = new ParentExpandableView("");
         parentObjects.add(newParent);
+        dFragment.show(manager, "alert dialog fragment");
+    }
+    public static void setLastParentText(EditText editableText)
+    {
+        String textParent = editableText.getText().toString();
+        parentObjects.get(parentObjects.size()-1).setDescription(textParent);
+    }
+    public static void removeLastElement()
+    {
+        parentObjects.remove(parentObjects.size()-1);
+    }
+    public void atualizar(View view)
+    {
         adapter.notifyDataSetChanged();
-        LayoutInflater inflater = getLayoutInflater();
+    }
 
+    public void adicionarFoto(View view)
+    {
+        Intent intent = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+        startActivityForResult(intent,1);
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data)
+    {
+        super.onActivityResult(requestCode, resultCode, data);
     }
 }
