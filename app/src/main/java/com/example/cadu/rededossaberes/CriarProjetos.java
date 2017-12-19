@@ -2,6 +2,8 @@ package com.example.cadu.rededossaberes;
 
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
 import android.support.v4.app.FragmentManager;
@@ -14,8 +16,15 @@ import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 import android.widget.ExpandableListView;
+
+import com.parse.Parse;
+import com.parse.ParseObject;
 import com.parse.ParseUser;
+
+import java.io.ByteArrayOutputStream;
+import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 public class CriarProjetos extends AppCompatActivity{
@@ -239,6 +248,38 @@ public class CriarProjetos extends AppCompatActivity{
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data)
     {
+        if(requestCode==1 && resultCode==1)
+        {
+            Uri localImagemSelecionada = data.getData();
+            try {
+                Bitmap imagem = MediaStore.Images.Media.getBitmap(getContentResolver() , localImagemSelecionada);
+                ByteArrayOutputStream stream = new ByteArrayOutputStream();
+                imagem.compress(Bitmap.CompressFormat.PNG,75,stream);
+                byte[] byteArray = stream.toByteArray();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
         super.onActivityResult(requestCode, resultCode, data);
+    }
+    public void enviarObjetos(View view)
+    {
+        for(ParentExpandableView parent : parentObjects)
+        {
+            for (ChildExpandableView child : parent.getChildObjects())
+            {
+                ParseObject childParse = new ParseObject("child");
+                childParse.put("description",child.getDescription());
+                childParse.saveInBackground();
+            }
+            ParseObject parentParse = new ParseObject("parent");
+            parentParse.put("description",parent.getDescription());
+            parentParse.addAllUnique("childs",Arrays.asList(parent.getChildObjects()));
+            parentParse.saveInBackground();
+        }
+        ParseObject post = new ParseObject("post");
+        post.put("name","primeiroPost");
+        post.addAllUnique("parents",Arrays.asList(parentObjects));
+        post.saveInBackground();
     }
 }
