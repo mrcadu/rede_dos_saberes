@@ -213,6 +213,13 @@ public class CriarProjetos extends AppCompatActivity{
     }
     public void editarChild(View view)
     {
+        int tamanhoChilds = parentObjects.get(currentParent).getChildObjects().size();
+        for(int i = tamanhoChilds; tamanhoChilds != 0; tamanhoChilds--)
+        {
+            View childView = expandableListView.getChildAt(i);
+            childView.findViewById(R.id.lblListHeader).setVisibility(View.GONE);
+            childView.findViewById(R.id.lblListHeaderEditable).setVisibility(View.VISIBLE);
+        }
         perspective = "edit";
     }
     public void excluirChild(View view)
