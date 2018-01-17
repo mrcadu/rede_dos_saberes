@@ -1,6 +1,5 @@
 package com.example.cadu.rededossaberes;
 
-import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.net.Uri;
@@ -13,18 +12,16 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
-import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 import android.widget.ExpandableListView;
+import android.widget.Toast;
 
-import com.parse.Parse;
+import com.parse.ParseFile;
 import com.parse.ParseObject;
 import com.parse.ParseUser;
-
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 public class CriarProjetos extends AppCompatActivity{
@@ -35,6 +32,11 @@ public class CriarProjetos extends AppCompatActivity{
     String perspective;
     final ExpandableListAdapter adapter = new ExpandableListAdapter(this, getData());
     FragmentManager manager = getSupportFragmentManager();
+    ArrayList<Integer> listaChild = new ArrayList<>();
+    int head;
+    byte[] byteArray;
+    static String postName;
+
     @Override
     protected void onCreate(Bundle savedInstanceState)
     {
@@ -53,23 +55,6 @@ public class CriarProjetos extends AppCompatActivity{
                             List<ChildExpandableView> childs = parentObjects.get(i).getChildObjects();
                             childs.remove(currentChild);
                             adapter.notifyDataSetChanged();
-                            perspective = "";
-                        }
-                        if (perspective.equals("edit")) {
-                            final EditText editableItem = view.findViewById(R.id.lblListItemEditable);
-                            editableItem.setVisibility(View.VISIBLE);
-                            view.findViewById(R.id.lblListItem).setVisibility(View.GONE);
-                            editableItem.requestFocus();
-                            InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
-                            imm.showSoftInput(editableItem, InputMethodManager.SHOW_IMPLICIT);
-                            editableItem.setOnFocusChangeListener(new View.OnFocusChangeListener() {
-                                @Override
-                                public void onFocusChange(View view, boolean b) {
-                                    if (!b) {
-                                        parentObjects.get(currentParent).getChildObjects().get(currentChild).setDescription(editableItem.getText().toString());
-                                    }
-                                }
-                            });
                             perspective = "";
                         }
                     }
@@ -210,27 +195,40 @@ public class CriarProjetos extends AppCompatActivity{
         ChildExpandableView newChild = new ChildExpandableView("");
         parentObjects.get(currentParent).getChildObjects().add(newChild);
         adapter.notifyDataSetChanged();
+        Toast.makeText(CriarProjetos.this,"Passo adicionado com sucesso",Toast.LENGTH_SHORT).show();
     }
     public void editarChild(View view)
     {
-        int tamanhoChilds = parentObjects.get(currentParent).getChildObjects().size();
-        for(int i = tamanhoChilds; tamanhoChilds != 0; tamanhoChilds--)
+        for(int i = 0;i < expandableListView.getChildCount(); i ++)
         {
             View childView = expandableListView.getChildAt(i);
-            childView.findViewById(R.id.lblListHeader).setVisibility(View.GONE);
-            childView.findViewById(R.id.lblListHeaderEditable).setVisibility(View.VISIBLE);
+            if ( childView.findViewById(R.id.lblListItemEditable) != null)
+            {
+                View editable = childView.findViewById(R.id.lblListItemEditable);
+                editable.setVisibility(View.VISIBLE);
+                View notEditable = childView.findViewById(R.id.lblListItem);
+                notEditable.setVisibility(View.GONE);
+                listaChild.add(i);
+            }
+            if(childView.findViewById(R.id.botaoSend) != null)
+            {
+                childView.findViewById(R.id.botaoSend).setVisibility(View.VISIBLE);
+                head = i;
+            }
         }
-        perspective = "edit";
+        Toast.makeText(CriarProjetos.this,"Modifique os passos e aperte no botão de confirmar para salvar as mudanças",Toast.LENGTH_SHORT).show();
     }
     public void excluirChild(View view)
     {
         perspective = "remove";
+        Toast.makeText(CriarProjetos.this,"Clique num passo para exclui-lo",Toast.LENGTH_SHORT).show();
     }
     public void adicionarParent(View view) {
         InputTextManager dFragment = new InputTextManager();
         ParentExpandableView newParent = new ParentExpandableView("");
         parentObjects.add(newParent);
         dFragment.show(manager, "alert dialog fragment");
+        Toast.makeText(CriarProjetos.this,"Instrução salva com sucesso",Toast.LENGTH_SHORT).show();
     }
     public static void setLastParentText(EditText editableText)
     {
@@ -255,38 +253,75 @@ public class CriarProjetos extends AppCompatActivity{
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data)
     {
-        if(requestCode==1 && resultCode==1)
+        if(requestCode==1 && resultCode==RESULT_OK && data != null)
         {
             Uri localImagemSelecionada = data.getData();
             try {
                 Bitmap imagem = MediaStore.Images.Media.getBitmap(getContentResolver() , localImagemSelecionada);
                 ByteArrayOutputStream stream = new ByteArrayOutputStream();
                 imagem.compress(Bitmap.CompressFormat.PNG,75,stream);
-                byte[] byteArray = stream.toByteArray();
+                byteArray = stream.toByteArray();
+
             } catch (IOException e) {
                 e.printStackTrace();
             }
+            Toast.makeText(CriarProjetos.this,"Foto adicionada com sucesso",Toast.LENGTH_SHORT).show();
         }
         super.onActivityResult(requestCode, resultCode, data);
     }
     public void enviarObjetos(View view)
     {
+        NomearPost dFragment = new NomearPost();
+        dFragment.show(manager, "alert dialog fragment");
+    }
+    public void realmenteEnviarObjetos(View view)
+    {
+        ArrayList<ArrayList<ParseObject>> listaParentParse = new ArrayList<>();
         for(ParentExpandableView parent : parentObjects)
         {
+            ArrayList<ParseObject> listaChildParse = new ArrayList<>();
             for (ChildExpandableView child : parent.getChildObjects())
             {
                 ParseObject childParse = new ParseObject("child");
                 childParse.put("description",child.getDescription());
+                listaChildParse.add(childParse);
                 childParse.saveInBackground();
             }
+            listaParentParse.add(listaChildParse);
             ParseObject parentParse = new ParseObject("parent");
             parentParse.put("description",parent.getDescription());
-            parentParse.addAllUnique("childs",Arrays.asList(parent.getChildObjects()));
+            parentParse.addAllUnique("childs",listaChildParse);
             parentParse.saveInBackground();
         }
         ParseObject post = new ParseObject("post");
-        post.put("name","primeiroPost");
-        post.addAllUnique("parents",Arrays.asList(parentObjects));
+        if(byteArray != null)
+        {
+            ParseFile parseImage = new ParseFile("imagem.png", byteArray);
+            post.put("imagem", parseImage);
+        }
+        if(postName==null)
+        {
+            postName = "";
+        }
+        post.put("name",postName);
+        post.addAllUnique("parents",listaParentParse);
         post.saveInBackground();
+        Toast.makeText(CriarProjetos.this,"Post feito com sucesso",Toast.LENGTH_SHORT).show();
+        Intent mudarActivityMain = new Intent(this,TelaInicial.class);
+        startActivity(mudarActivityMain);
+    }
+    public void aplicarMudancas(View view)
+    {
+        for(int i = 0;i < parentObjects.get(currentParent).getChildObjects().size();i++)
+        {
+            EditText descriptionView = expandableListView.getChildAt(listaChild.get(i)).findViewById(R.id.lblListItemEditable);
+            String description = descriptionView.getText().toString();
+            parentObjects.get(currentParent).getChildObjects().get(i).setDescription(description);
+            adapter.notifyDataSetChanged();
+            expandableListView.getChildAt(listaChild.get(i)).findViewById(R.id.lblListItem).setVisibility(View.VISIBLE);
+            descriptionView.setVisibility(View.GONE);
+        }
+        expandableListView.getChildAt(head).findViewById(R.id.botaoSend).setVisibility(View.GONE);
+        Toast.makeText(CriarProjetos.this,"As edições foram salvas com sucesso",Toast.LENGTH_SHORT).show();
     }
 }

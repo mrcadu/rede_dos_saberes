@@ -3,7 +3,8 @@
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
     android:orientation="vertical"
-    android:background="@android:color/white" >
+    android:background="@android:color/white"
+    android:id="@+id/criarProjetos">
     <include android:id="@+id/toolbar"
         layout = "@layout/toolbar"/>
     <ExpandableListView
@@ -39,6 +40,15 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:onClick="atualizar"
+            android:layout_marginTop="25dp"
+            android:layout_marginRight="10dp"
+            android:layout_toRightOf="@id/botaoRemoverStep"
+            android:visibility="gone"/>
+        <Button
+            android:id="@+id/botaoEnviarSerio"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:onClick="realmenteEnviarObjetos"
             android:layout_marginTop="25dp"
             android:layout_marginRight="10dp"
             android:layout_toRightOf="@id/botaoRemoverStep"
