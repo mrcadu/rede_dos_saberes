@@ -1,4 +1,4 @@
-package com.example.cadu.rededossaberes;
+package com.example.cadu.rededossaberes.activity;
 
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
@@ -12,6 +12,7 @@ import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.cadu.rededossaberes.R;
 import com.parse.LogInCallback;
 import com.parse.ParseException;
 import com.parse.ParseUser;

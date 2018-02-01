@@ -1,4 +1,4 @@
-package com.example.cadu.rededossaberes;
+package com.example.cadu.rededossaberes.adapter;
 
 import java.util.List;
 import android.content.Context;
@@ -9,10 +9,13 @@ import android.widget.BaseExpandableListAdapter;
 import android.widget.EditText;
 import android.widget.TextView;
 
+import com.example.cadu.rededossaberes.expandableListViewElements.ChildExpandableView;
+import com.example.cadu.rededossaberes.expandableListViewElements.ParentExpandableView;
+import com.example.cadu.rededossaberes.R;
+
 public class ExpandableListAdapter extends BaseExpandableListAdapter {
     Context context;
     List<ParentExpandableView> parentExpandableViews;
-
     public ExpandableListAdapter(Context context, List<ParentExpandableView> parentExpandableViews)
     {
         this.context = context;

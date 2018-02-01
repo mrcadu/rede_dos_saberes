@@ -1,7 +1,9 @@
-package com.example.cadu.rededossaberes;
+package com.example.cadu.rededossaberes.expandableListViewElements;
 
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+
+import com.example.cadu.rededossaberes.R;
 
 public class LastChild extends AppCompatActivity {
 

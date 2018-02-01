@@ -1,4 +1,4 @@
-package com.example.cadu.rededossaberes;
+package com.example.cadu.rededossaberes.fragment;
 
 import android.app.AlertDialog;
 import android.app.Dialog;
@@ -10,7 +10,10 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 
-public class NomearPost extends DialogFragment {
+import com.example.cadu.rededossaberes.R;
+import com.example.cadu.rededossaberes.activity.CriarProjetos;
+
+public class NomearPostFragment extends DialogFragment {
     @Override
     public Dialog onCreateDialog(Bundle savedInstanceState) {
         final View view = getActivity().getLayoutInflater().inflate(R.layout.activity_input_text, null);

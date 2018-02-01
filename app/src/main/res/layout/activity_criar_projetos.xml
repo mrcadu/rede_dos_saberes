@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/criarProjetos"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:background="@android:color/white"
+    android:orientation="vertical">
+
+    <include
+        android:id="@+id/toolbar"
+        layout="@layout/toolbar" />
+
+    <ExpandableListView
+        android:id="@+id/lvExp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+
+    <RelativeLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content">
+
+        <TextView
+            android:layout_marginStart="20px"
+            android:layout_marginTop="10px"
+            android:id="@+id/listaImagens"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@color/colorPrimaryDark"/>
+
+        <Button
+            android:id="@+id/botaoEnviar"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:layout_marginEnd="25dp"
+            android:layout_below="@id/listaImagens"
+            android:layout_marginTop="25dp"
+            android:background="@drawable/button_all_collored"
+            android:onClick="enviarObjetos"
+            android:text="@string/enviar"
+            android:textColor="@android:color/white" />
+
+        <Button
+            android:id="@+id/botaoRemoverStep"
+            android:layout_below="@id/listaImagens"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="25dp"
+            android:layout_marginTop="25dp"
+            android:background="@drawable/button_all_collored"
+            android:onClick="adicionarParent"
+            android:text="@string/adicionarPasso"
+            android:textColor="@android:color/white" />
+
+        <Button
+            android:id="@+id/botaoAtualizar"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginRight="10dp"
+            android:layout_marginTop="25dp"
+            android:layout_toRightOf="@id/botaoRemoverStep"
+            android:onClick="atualizar"
+            android:visibility="gone" />
+
+        <Button
+            android:id="@+id/botaoEnviarSerio"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginRight="10dp"
+            android:layout_marginTop="25dp"
+            android:layout_toRightOf="@id/botaoRemoverStep"
+            android:onClick="realmenteEnviarObjetos"
+            android:visibility="gone" />
+    </RelativeLayout>
+</LinearLayout>

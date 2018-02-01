@@ -9,8 +9,8 @@
     <string name="terceiro_botao">Sair</string>
     <string name="continuar_sem_login">Continuar sem Login</string>
     <string name="ja_possui_conta">Já possui Conta?</string>
-    <string name="parse_server_url">http://35.196.17.31:1337/parse/</string>
-    <string name="parse_app_id">rdsParseServer</string>
+    <string name="parse_server_url">http://35.196.36.92:1337/parse/</string>
+    <string name="parse_app_id">RDS</string>
     <string name="enviar">enviar</string>
     <string name="pontuacao">pontuação</string>
     <string name="perguntas">ver perguntas</string>
@@ -25,4 +25,7 @@
     <string name="adicionar">Adicionar</string>
     <string name="adicionarPasso">Adicionar Passo</string>
     <string name="confirmarParent">Confirmar</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>

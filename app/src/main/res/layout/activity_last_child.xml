@@ -3,7 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    tools:context="com.example.cadu.rededossaberes.LastChild"
+    tools:context="com.example.cadu.rededossaberes.expandableListViewElements.LastChild"
     android:background="@android:color/holo_red_dark"
     android:onClick="removerParent"
     tools:ignore="OnClick">

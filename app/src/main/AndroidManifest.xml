@@ -11,6 +11,7 @@
 
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <uses-permission android:name="android.permission.CHANGE_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
 
     <application
         android:allowBackup="true"
@@ -26,23 +27,24 @@
             android:name="com.parse.APPLICATION_ID"
             android:value="@string/parse_app_id" />
 
-        <activity android:name=".TelaInicial">
+        <activity android:name=".activity.TelaInicial">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".VerProjetos" />
-        <activity android:name=".CriarProjetos" />
-        <activity android:name=".Cadastro" />
-        <activity android:name=".Step" />
+        <activity android:name=".activity.VerProjetos" />
+        <activity android:name=".activity.CriarProjetos" />
+        <activity android:name=".activity.Cadastro" />
+        <activity android:name=".expandableListViewElements.Step" />
         android:name=".App"
-        <activity android:name=".Login" />
-        <activity android:name=".GroupStep" />
-        <activity android:name=".LastChild" />
-        <activity android:name=".header" />
-        <activity android:name=".InputText"></activity>
+        <activity android:name=".activity.Login" />
+        <activity android:name=".expandableListViewElements.GroupStep" />
+        <activity android:name=".expandableListViewElements.LastChild" />
+        <activity android:name=".expandableListViewElements.header" />
+        <activity android:name=".fragment.InputTextFragment" />
+        <activity android:name=".Post" />
     </application>
 
 </manifest>

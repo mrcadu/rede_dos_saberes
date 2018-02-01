@@ -1,19 +1,19 @@
-package com.example.cadu.rededossaberes;
+package com.example.cadu.rededossaberes.fragment;
 
 import android.app.AlertDialog;
 import android.app.Dialog;
-import android.content.Context;
 import android.content.DialogInterface;
 import android.os.Bundle;
 import android.support.v4.app.DialogFragment;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.RelativeLayout;
 
-public class InputTextManager extends DialogFragment {
+import com.example.cadu.rededossaberes.activity.CriarProjetos;
+import com.example.cadu.rededossaberes.R;
+
+public class InputTextManagerFragment extends DialogFragment {
     static boolean dismissed;
 
     @Override
@@ -22,7 +22,6 @@ public class InputTextManager extends DialogFragment {
         return new AlertDialog.Builder(getActivity())
                 // Set Dialog Icon
                 .setTitle("Escolha o nome do novo passo")
-                .setIcon(R.drawable.plusone)
                 // Set Dialog Title
                 .setView(view)
                 /*.setTitle("Escolha o nome do novo passo")*/
