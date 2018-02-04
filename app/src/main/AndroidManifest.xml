@@ -45,6 +45,9 @@
         <activity android:name=".expandableListViewElements.header" />
         <activity android:name=".fragment.InputTextFragment" />
         <activity android:name=".Post" />
+        <activity android:name=".activity.VisualizarPost" />
+        <activity android:name=".ListaParents" />
+        <activity android:name=".listaChilds"></activity>
     </application>
 
 </manifest>
