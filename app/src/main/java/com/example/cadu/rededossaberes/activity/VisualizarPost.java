@@ -1,19 +1,19 @@
 package com.example.cadu.rededossaberes.activity;
 
+import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.widget.ListView;
 
 import com.example.cadu.rededossaberes.ActionBarSingleton;
 import com.example.cadu.rededossaberes.R;
-import com.example.cadu.rededossaberes.adapter.ChildsAttachedToParentAdapter;
 import com.example.cadu.rededossaberes.adapter.ParentShowerAdapter;
-import com.parse.FindCallback;
-import com.parse.ParseException;
 import com.parse.ParseObject;
-import com.parse.ParseQuery;
+import com.parse.ParseUser;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -26,28 +26,28 @@ public class VisualizarPost extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_visualizar_post);
         Toolbar toolbar = findViewById(R.id.toolbar);
-        ActionBarSingleton actionBarSingleton = new ActionBarSingleton();
-        actionBarSingleton.setarActionBar(toolbar,this);
-        ParseQuery query = new ParseQuery<ParseObject>("parents");
-        ListView listViewChilds = findViewById(R.id.listaChilds);
-        ListView listViewParents = findViewById(R.id.listaParents);
-        query.findInBackground(new FindCallback<ParseObject>()
+        ActionBarSingleton.getInstance().setarActionBar(toolbar,VisualizarPost.this);
+        final ListView listViewParents = findViewById(R.id.listaParents);
+        List<ParseObject> parents = VerProjetos.currentPost.getList("parents");
+        listViewParents.setAdapter(new ParentShowerAdapter(VisualizarPost.this,parents));
+    }
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu)
+    {
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.menu_buttons, menu);
+        return true;
+    }
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch ( item.getItemId() )
         {
-            @Override
-            public void done(List<ParseObject> objects, ParseException e)
-            {
-                if(e == null)
-                {
-
-                }
-                else
-                {
-                    Log.d("queryParents",e.getMessage());
-                }
-
-            }
-        });
-        ChildsAttachedToParentAdapter adapterChilds;
-        ParentShowerAdapter adapterParents;
+            case R.id.action_sair:
+                ParseUser.logOut();
+                Intent mudarActivityLogin = new Intent(VisualizarPost.this,Login.class);
+                startActivity(mudarActivityLogin);
+            default:
+                return super.onOptionsItemSelected(item);
+        }
     }
 }

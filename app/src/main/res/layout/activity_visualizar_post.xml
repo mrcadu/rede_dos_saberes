@@ -5,6 +5,9 @@
     android:layout_height="match_parent"
     tools:context="com.example.cadu.rededossaberes.activity.VisualizarPost"
     android:orientation="vertical">
+    <include
+        android:id="@+id/toolbar"
+        layout="@layout/toolbar" />
     <TextView
         android:id="@+id/nomePost"
         android:layout_width="wrap_content"
@@ -13,9 +16,5 @@
         android:id="@+id/listaParents"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
-        <ListView
-            android:id="@+id/listaChilds"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"/>
     </ListView>
 </LinearLayout>

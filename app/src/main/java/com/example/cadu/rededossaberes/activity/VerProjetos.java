@@ -9,6 +9,8 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ListView;
 import com.example.cadu.rededossaberes.R;
 import com.example.cadu.rededossaberes.adapter.VisualizarPostsAdapter;
@@ -27,6 +29,7 @@ public class VerProjetos extends AppCompatActivity {
     Context context = VerProjetos.this;
     VisualizarPostsAdapter adapter;
     ArrayList<ParseObject> listaPostagens = new ArrayList();
+    static ParseObject currentPost;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -55,6 +58,15 @@ public class VerProjetos extends AppCompatActivity {
                                            }
                                    }
                                });
+        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id)
+            {
+                currentPost = listaPostagens.get(position);
+                Intent intent = new Intent(context,VisualizarPost.class);
+                startActivity(intent);
+            }
+        });
     }
     @Override
     public boolean onCreateOptionsMenu(Menu menu)
