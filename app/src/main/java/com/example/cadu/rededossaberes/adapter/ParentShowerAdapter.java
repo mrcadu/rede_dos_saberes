@@ -1,6 +1,7 @@
 package com.example.cadu.rededossaberes.adapter;
 
 import android.content.Context;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -13,36 +14,25 @@ import com.parse.ParseObject;
 import com.squareup.picasso.Picasso;
 
 import java.util.List;
-import java.util.Map;
 
 public class ParentShowerAdapter extends BaseAdapter {
 
-    Map<ParseObject,ParseFile> singleImageParentPreview;
-    List<ParseObject> listaParentsPost;
+    List<ParseObject> listaPosts;
     Context context;
 
-    public ParentShowerAdapter(Context context, List<ParseObject> listaParentsPost) {
-        for (ParseObject object:listaParentsPost)
-        {
-            boolean imagemExistente = false;
-            if(object.getParseFile("imagem") != null && imagemExistente == false)
-            {
-                singleImageParentPreview.put(object,object.getParseFile("imagem"));
-                imagemExistente = true;
-            }
-        }
-        this.listaParentsPost = listaParentsPost;
+    public ParentShowerAdapter(Context context, List<ParseObject> listaPosts) {
+        this.listaPosts = listaPosts;
         this.context = context;
     }
 
     @Override
     public int getCount() {
-        return listaParentsPost.size();
+        return listaPosts.size();
     }
 
     @Override
     public ParseObject getItem(int position) {
-        return listaParentsPost.get(position);
+        return listaPosts.get(position);
     }
 
     @Override
@@ -55,13 +45,24 @@ public class ParentShowerAdapter extends BaseAdapter {
         if (convertView == null)
         {
             LayoutInflater inflater =(LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-            convertView = inflater.inflate(R.layout.activity_lista_parents,null);
+            convertView = inflater.inflate(R.layout.activity_post,null);
         }
         ParseObject currentListData = getItem(position);
-        TextView  descricaoParents = convertView.findViewById(R.id.descricaoParents);
-        ImageView descricaoParentsImage = convertView.findViewById(R.id.descricaoParentsImagem);
-        descricaoParents.setText(currentListData.getString("description"));
-        Picasso.with(context).load(singleImageParentPreview.get(currentListData).getUrl()).fit().into(descricaoParentsImage);
+        TextView descricao = convertView.findViewById(R.id.descricao);
+        descricao.setText(currentListData.getString("name"));
+        final ImageView imagemDescricao = convertView.findViewById(R.id.imagemDescricao);
+        List<ParseObject> listaParentsPost = currentListData.getList("parents");
+        boolean firstPicture = false;
+        for(ParseObject parentPost : listaParentsPost)
+        {
+            if(parentPost.getParseFile("imagem") != null && firstPicture == false)
+            {
+                ParseFile imagemDescricaoParse = parentPost.getParseFile("imagem");
+                Picasso.with(this.context).load(imagemDescricaoParse.getUrl()).fit().into(imagemDescricao);
+                Log.d("teste", "funcionou");
+                firstPicture = true;
+            }
+        }
         return convertView;
     }
 }

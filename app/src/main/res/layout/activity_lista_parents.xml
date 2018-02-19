@@ -5,13 +5,19 @@
     android:layout_height="match_parent"
     tools:context="com.example.cadu.rededossaberes.ListaParents"
     android:orientation="vertical">
-    <TextView
-        android:id="@+id/descricaoParents"
+    <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
-    <ImageView
-        android:id="@+id/descricaoParentsImagem"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:scaleType="fitCenter"/>
+        android:layout_height="wrap_content">
+        <TextView
+            android:id="@+id/descricaoParents"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginRight="100px"/>
+        <ImageView
+            android:id="@+id/descricaoParentsImagem"
+            android:layout_width="100px"
+            android:layout_height="100px"
+            android:scaleType="fitCenter"
+            android:layout_toRightOf="@id/descricaoParents"/>
+    </RelativeLayout>
 </LinearLayout>

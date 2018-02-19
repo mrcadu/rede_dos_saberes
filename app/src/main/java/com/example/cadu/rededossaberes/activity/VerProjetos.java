@@ -13,7 +13,7 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
 import com.example.cadu.rededossaberes.R;
-import com.example.cadu.rededossaberes.adapter.VisualizarPostsAdapter;
+import com.example.cadu.rededossaberes.adapter.ParentShowerAdapter;
 import com.parse.FindCallback;
 import com.parse.GetCallback;
 import com.parse.ParseException;
@@ -27,7 +27,7 @@ public class VerProjetos extends AppCompatActivity {
 
     ListView listView;
     Context context = VerProjetos.this;
-    VisualizarPostsAdapter adapter;
+    ParentShowerAdapter adapter;
     ArrayList<ParseObject> listaPostagens = new ArrayList();
     static ParseObject currentPost;
     @Override
@@ -49,7 +49,7 @@ public class VerProjetos extends AppCompatActivity {
                                            for (ParseObject object : objects) {
                                                listaPostagens.add(object);
                                            }
-                                           adapter = new VisualizarPostsAdapter(context, listaPostagens);
+                                           adapter = new ParentShowerAdapter(context, listaPostagens);
                                            listView.setAdapter(adapter);
                                        }
                                        else

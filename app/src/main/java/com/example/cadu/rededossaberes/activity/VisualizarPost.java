@@ -11,7 +11,7 @@ import android.widget.ListView;
 
 import com.example.cadu.rededossaberes.ActionBarSingleton;
 import com.example.cadu.rededossaberes.R;
-import com.example.cadu.rededossaberes.adapter.ParentShowerAdapter;
+import com.example.cadu.rededossaberes.adapter.VisualizarPostsAdapter;
 import com.parse.ParseObject;
 import com.parse.ParseUser;
 
@@ -29,7 +29,7 @@ public class VisualizarPost extends AppCompatActivity {
         ActionBarSingleton.getInstance().setarActionBar(toolbar,VisualizarPost.this);
         final ListView listViewParents = findViewById(R.id.listaParents);
         List<ParseObject> parents = VerProjetos.currentPost.getList("parents");
-        listViewParents.setAdapter(new ParentShowerAdapter(VisualizarPost.this,parents));
+        listViewParents.setAdapter(new VisualizarPostsAdapter(VisualizarPost.this,parents));
     }
     @Override
     public boolean onCreateOptionsMenu(Menu menu)
