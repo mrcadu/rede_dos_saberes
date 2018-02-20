@@ -2,22 +2,27 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
+    android:layout_height="wrap_content"
     tools:context="com.example.cadu.rededossaberes.ListaParents"
     android:orientation="vertical">
-    <RelativeLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content">
         <TextView
-            android:id="@+id/descricaoParents"
+            android:id="@+id/descricaoParent"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginRight="100px"/>
+            android:textAlignment="center"
+            android:textStyle="bold|normal"
+            android:textColor="@color/android:black"
+            android:textSize="15dp"/>
         <ImageView
             android:id="@+id/descricaoParentsImagem"
-            android:layout_width="100px"
-            android:layout_height="100px"
-            android:scaleType="fitCenter"
-            android:layout_toRightOf="@id/descricaoParents"/>
-    </RelativeLayout>
+            android:layout_width="match_parent"
+            android:layout_height="300px"
+            android:layout_margin="20px"
+            android:scaleType="fitCenter" />
+        <TextView
+            android:id="@+id/descricaoChilds"
+            android:layout_marginLeft="20dp"
+            android:layout_marginRight="20dp"
+            android:layout_height="wrap_content"
+            android:layout_width="match_parent"/>
 </LinearLayout>

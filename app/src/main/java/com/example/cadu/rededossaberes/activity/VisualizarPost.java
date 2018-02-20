@@ -8,24 +8,23 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.widget.ListView;
-
+import android.widget.TextView;
 import com.example.cadu.rededossaberes.ActionBarSingleton;
 import com.example.cadu.rededossaberes.R;
 import com.example.cadu.rededossaberes.adapter.VisualizarPostsAdapter;
 import com.parse.ParseObject;
 import com.parse.ParseUser;
-
 import java.util.ArrayList;
 import java.util.List;
 
 public class VisualizarPost extends AppCompatActivity {
-    ArrayList<ParseObject> arrayChilds;
-    ArrayList<ParseObject> arrayParents;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_visualizar_post);
         Toolbar toolbar = findViewById(R.id.toolbar);
+        TextView nomePost = findViewById(R.id.nomePost);
+        nomePost.setText(VerProjetos.currentPost.getString("name"));
         ActionBarSingleton.getInstance().setarActionBar(toolbar,VisualizarPost.this);
         final ListView listViewParents = findViewById(R.id.listaParents);
         List<ParseObject> parents = VerProjetos.currentPost.getList("parents");

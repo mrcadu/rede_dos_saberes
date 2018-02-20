@@ -2,7 +2,7 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
+    android:layout_height="wrap_content"
     tools:context="com.example.cadu.rededossaberes.activity.VisualizarPost"
     android:orientation="vertical">
     <include
@@ -10,8 +10,12 @@
         layout="@layout/toolbar" />
     <TextView
         android:id="@+id/nomePost"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content" />
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textSize="20dp"
+        android:textAlignment="center"
+        android:textColor="@color/android:black"
+        android:textStyle="bold|normal"/>
     <ListView
         android:id="@+id/listaParents"
         android:layout_width="match_parent"

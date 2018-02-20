@@ -68,10 +68,12 @@ public class VisualizarPostsAdapter extends BaseAdapter {
             convertView = inflater.inflate(R.layout.activity_lista_parents,null);
         }
         ParseObject currentListData = getItem(position);
-        TextView  descricaoParents = convertView.findViewById(R.id.descricaoParents);
+        TextView  descricaoParent = convertView.findViewById(R.id.descricaoParent);
         ImageView descricaoParentsImage = convertView.findViewById(R.id.descricaoParentsImagem);
-        descricaoParents.setText(" - " + currentListData.getString("description"));
-        descricaoParents.append("\n");
+        TextView descricaoChilds = convertView.findViewById(R.id.descricaoChilds);
+        descricaoParent.setText(currentListData.getString("description"));
+        descricaoParent.append("\n");
+        descricaoChilds.setText("");
         for (ParseObject object: listaChilds.get(currentListData))
         {
             try {
@@ -79,9 +81,17 @@ public class VisualizarPostsAdapter extends BaseAdapter {
             } catch (ParseException e) {
                 e.printStackTrace();
             }
-            descricaoParents.append("      *" + object.getString("description") + "\n");
+            descricaoChilds.append(object.getString("description") + "\n");
         }
-        Picasso.with(this.context).load(singleImageParentPreview.get(currentListData).getUrl()).fit().into(descricaoParentsImage);
+        if(singleImageParentPreview.get(currentListData) != null)
+        {
+            Picasso.with(this.context).load(singleImageParentPreview.get(currentListData).getUrl()).fit().into(descricaoParentsImage);
+
+        }
+        else
+        {
+            descricaoParentsImage.setVisibility(View.GONE);
+        }
         return convertView;
     }
 }
