@@ -4,24 +4,61 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     tools:context="com.example.cadu.rededossaberes.Post"
-    android:orientation="horizontal"
-    android:background="@drawable/borded_background_ver_projetos">
+    android:orientation="vertical">
     <RelativeLayout
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="5dp">
-        <TextView
-            android:id="@+id/descricao"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="teste"
-            android:layout_marginLeft="10px"/>
+        android:layout_margin="10px"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
         <ImageView
             android:id="@+id/imagemDescricao"
-            android:layout_width="100px"
-            android:layout_height="100px"
+            android:layout_width="200px"
+            android:layout_height="300px"
+            android:layout_marginStart="30px"
             android:scaleType="fitCenter"
-            android:layout_alignParentRight="true"
-            android:layout_below="@+id/descricao"/>
+            android:background="@drawable/rectangle_background"/>
+        <TextView
+            android:id="@+id/descricao"
+            android:layout_marginStart="30px"
+            android:layout_width="200px"
+            android:layout_height="wrap_content"
+            android:text=""
+            android:textAlignment="center"
+            android:background="@drawable/rectangle_background"
+            android:layout_below="@id/imagemDescricao"/>
+
+        <ImageView
+            android:id="@+id/imagemDescricao2"
+            android:layout_width="200px"
+            android:layout_height="300px"
+            android:layout_alignParentTop="true"
+            android:layout_alignStart="@+id/descricao2"
+            android:scaleType="fitCenter"
+            android:background="@drawable/rectangle_background"/>
+        <TextView
+            android:id="@+id/descricao2"
+            android:layout_width="200px"
+            android:layout_marginStart="270px"
+            android:layout_height="wrap_content"
+            android:text=""
+            android:textAlignment="center"
+            android:layout_marginLeft="10px"
+            android:layout_below="@id/imagemDescricao2"
+            android:background="@drawable/rectangle_background"/>
+        <ImageView
+            android:id="@+id/imagemDescricao3"
+            android:layout_width="200px"
+            android:layout_marginStart="510px"
+            android:layout_height="300px"
+            android:scaleType="fitCenter"
+            android:background="@drawable/rectangle_background"/>
+        <TextView
+            android:id="@+id/descricao3"
+            android:layout_width="200px"
+            android:layout_height="wrap_content"
+            android:text=""
+            android:textAlignment="center"
+            android:layout_marginStart="510px"
+            android:layout_below="@id/imagemDescricao3"
+            android:background="@drawable/rectangle_background"/>
     </RelativeLayout>
 </LinearLayout>
