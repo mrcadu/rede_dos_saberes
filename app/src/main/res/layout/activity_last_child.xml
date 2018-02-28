@@ -1,17 +1,29 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     tools:context="com.example.cadu.rededossaberes.expandableListViewElements.LastChild"
-    android:background="@android:color/holo_red_dark"
-    android:onClick="removerParent"
-    tools:ignore="OnClick">
-    <Button
-        android:layout_width="70px"
-        android:layout_height="70px"
-        android:layout_centerHorizontal="true"
-        android:background="@drawable/ic_clear"
-        android:onClick="removerParent"
-        tools:ignore="OnClick" />
-</RelativeLayout>
+    tools:ignore="OnClick"
+    android:orientation="vertical">
+    <TextView
+        android:id="@+id/nomeImagens"
+        android:text=""
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="10dp"
+        android:textColor="@color/colorPrimaryDark"/>
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@android:color/holo_red_dark"
+        android:onClick="removerParent">
+        <Button
+            android:layout_width="70px"
+            android:layout_height="70px"
+            android:layout_centerHorizontal="true"
+            android:background="@drawable/ic_clear"
+            android:onClick="removerParent"
+            tools:ignore="OnClick" />
+    </RelativeLayout>
+</LinearLayout>

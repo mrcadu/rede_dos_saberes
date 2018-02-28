@@ -1,5 +1,6 @@
 package com.example.cadu.rededossaberes.activity;
 
+import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.net.Uri;
@@ -7,24 +8,31 @@ import android.os.Bundle;
 import android.provider.MediaStore;
 import android.support.v4.app.FragmentManager;
 import android.support.v7.app.AppCompatActivity;
-import android.view.LayoutInflater;
+import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
+import android.view.MotionEvent;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ExpandableListView;
 import android.widget.TextView;
 import android.widget.Toast;
+import com.example.cadu.rededossaberes.ActionBarSingleton;
+import com.example.cadu.rededossaberes.RightDrawableOnTouchListener;
 import com.example.cadu.rededossaberes.expandableListViewElements.ChildExpandableView;
 import com.example.cadu.rededossaberes.fragment.NomearPostFragment;
 import com.example.cadu.rededossaberes.expandableListViewElements.ParentExpandableView;
 import com.example.cadu.rededossaberes.R;
 import com.example.cadu.rededossaberes.adapter.ExpandableListAdapter;
 import com.example.cadu.rededossaberes.fragment.InputTextManagerFragment;
+import com.example.cadu.rededossaberes.fragment.TextViewEditFragment;
+import com.parse.ParseException;
 import com.parse.ParseFile;
 import com.parse.ParseObject;
 import com.parse.ParseUser;
+import com.parse.SaveCallback;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -46,8 +54,9 @@ public class CriarProjetos extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_criar_projetos);
-        LayoutInflater inflater = getLayoutInflater();
-        expandableListView = (ExpandableListView) findViewById(R.id.lvExp);
+        Toolbar toolbarCadastro = findViewById(R.id.toolbar);
+        ActionBarSingleton.getInstance().setarActionBar(toolbarCadastro,this);
+        expandableListView = findViewById(R.id.lvExp);
         expandableListView.setOnGroupExpandListener(onGroupExpandListenser);
         expandableListView.setAdapter(adapter);
         expandableListView.setOnChildClickListener(new ExpandableListView.OnChildClickListener() {
@@ -68,14 +77,44 @@ public class CriarProjetos extends AppCompatActivity {
         expandableListView.setOnGroupExpandListener(new ExpandableListView.OnGroupExpandListener() {
             @Override
             public void onGroupExpand(int i) {
+                if(i != currentParent){
+                    expandableListView.collapseGroup(currentParent);
+                }
+                currentParent = i;
                 parentObjects.get(i);
             }
         });
         expandableListView.setOnGroupClickListener(new ExpandableListView.OnGroupClickListener() {
+            @SuppressLint("ClickableViewAccessibility")
             @Override
-            public boolean onGroupClick(ExpandableListView expandableListView, View view, int i, long l) {
-                currentParent = i;
-                return false;
+            public boolean onGroupClick(ExpandableListView parent, View v, final int groupPosition, long id) {
+                final TextView parentEdit = v.findViewById(R.id.lblListHeader);
+                parentEdit.setOnTouchListener(new RightDrawableOnTouchListener(parentEdit) {
+
+                    @Override
+                    public boolean onDrawableTouch(final MotionEvent event) {
+                        Bundle bundle = new Bundle();
+                        bundle.putString("currentName",parentEdit.getText().toString());
+                        bundle.putInt("currentParentIndex",groupPosition);
+                        TextViewEditFragment dFragment = new TextViewEditFragment();
+                        dFragment.setArguments(bundle);
+                        dFragment.show(manager, "alert dialog fragment");
+                        return true;
+                    }
+                    @Override
+                    public boolean onTextViewTouch(MotionEvent event) {
+                        if(expandableListView.isGroupExpanded(groupPosition))
+                        {
+                            expandableListView.collapseGroup(currentParent);
+                        }
+                        else
+                        {
+                            expandableListView.expandGroup(groupPosition);
+                        }
+                        return false;
+                    }
+                });
+                return true;
             }
         });
     }
@@ -113,7 +152,6 @@ public class CriarProjetos extends AppCompatActivity {
     //Sample data for expandable list view.
     public List<ParentExpandableView> getData() {
         if (parentObjects.size() == 0) {
-            ChildExpandableView childExpandableView1;
 
             addParent("Ingredientes, materiais e instrumentos", "Feijão");
             addParent("Primeiras instruções", "Cozinhe o feijão");
@@ -130,56 +168,20 @@ public class CriarProjetos extends AppCompatActivity {
         }
         return parentObjects;
     }
-
-    private List<ChildExpandableView> getChildren(ParentExpandableView parentExpandableView)
-
-    {
-        for (ParentExpandableView parent : parentObjects) {
-            if (parent.getDescription().equals(parentExpandableView)) {
-                return parent.getChildObjects();
-            }
-        }
-        return null;
-    }
-
-    private void addParent(String description, List<ChildExpandableView> childExpandableViews) {
-        ParentExpandableView parentExpandableView = new ParentExpandableView(description, childExpandableViews);
-        parentObjects.add(parentExpandableView);
-    }
-
     private void addParent(String description, String descriptionChild) {
         ParentExpandableView parentExpandableView = new ParentExpandableView(description, descriptionChild);
         parentObjects.add(parentExpandableView);
     }
-
-    private void addChild(ParentExpandableView parentExpandableView, ChildExpandableView childExpandableView) {
-        for (ParentExpandableView parent : parentObjects) {
-            if (parentExpandableView.getDescription() == parent.getDescription()) {
-                parent.getChildObjects().add(childExpandableView);
-            }
-        }
-    }
-
     private void addChild(ParentExpandableView parentExpandableView, String descriptionChild) {
         ChildExpandableView childExpandableView = new ChildExpandableView(descriptionChild);
         for (ParentExpandableView parent : parentObjects) {
-            if (parentExpandableView.getDescription() == parent.getDescription()) {
+            if (parentExpandableView.getDescription().equals(parent.getDescription())) {
                 parent.getChildObjects().add(childExpandableView);
             }
         }
     }
-
-    private void addChilds(ParentExpandableView parentExpandableView, List<ChildExpandableView> childExpandableViews) {
-        for (ParentExpandableView parent : parentObjects) {
-            if (parentExpandableView.getDescription() == parent.getDescription()) {
-                for (ChildExpandableView child : childExpandableViews) {
-                    parent.getChildObjects().add(child);
-                }
-            }
-        }
-    }
-
-    public void removerParent(View view) {
+    public void removerParent(View view)
+    {
         parentObjects.remove(currentParent);
         adapter.notifyDataSetChanged();
     }
@@ -226,6 +228,9 @@ public class CriarProjetos extends AppCompatActivity {
         String textParent = editableText.getText().toString();
         parentObjects.get(parentObjects.size() - 1).setDescription(textParent);
     }
+    public static void setParentText(String descricao,int parentIndex) {
+        parentObjects.get(parentIndex).setDescription(descricao);
+    }
 
     public static void removeLastElement() {
         parentObjects.remove(parentObjects.size() - 1);
@@ -242,17 +247,15 @@ public class CriarProjetos extends AppCompatActivity {
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        String descricao = "";
         if (requestCode == 1 && resultCode == RESULT_OK && data != null) {
             Uri localImagemSelecionada = data.getData();
-            descricao = localImagemSelecionada.toString();
             try {
                 byte[] byteArray;
                 Bitmap imagem = MediaStore.Images.Media.getBitmap(getContentResolver(), localImagemSelecionada);
                 ByteArrayOutputStream stream = new ByteArrayOutputStream();
                 imagem.compress(Bitmap.CompressFormat.PNG, 75, stream);
                 byteArray = stream.toByteArray();
-                if(byteArray!= null)
+                if(byteArray != null)
                 {
                     parentObjects.get(currentParent).getListaImagens().add(byteArray);
                 }
@@ -261,9 +264,7 @@ public class CriarProjetos extends AppCompatActivity {
             }
             Toast.makeText(CriarProjetos.this, "Foto adicionada com sucesso", Toast.LENGTH_SHORT).show();
         }
-        TextView listaTextoImagens = findViewById(R.id.listaImagens);
-        String[] descricaoSplitado = descricao.split("/");
-        listaTextoImagens.append(descricaoSplitado[descricaoSplitado.length - 1] + "\n");
+        adapter.notifyDataSetChanged();
         super.onActivityResult(requestCode, resultCode, data);
     }
 
@@ -273,14 +274,28 @@ public class CriarProjetos extends AppCompatActivity {
     }
 
     public void realmenteEnviarObjetos(View view) {
+        if(!verificarPassos())
+        {
+            Toast.makeText(CriarProjetos.this, "Não é possível enviar um post que possua passos sem descrição", Toast.LENGTH_LONG).show();
+            return;
+        }
         ArrayList<ParseObject> listaParentParse = new ArrayList<>();
         for (ParentExpandableView parent : parentObjects) {
             ArrayList<ParseObject> listaChildParse = new ArrayList<>();
             for (ChildExpandableView child : parent.getChildObjects()) {
+
                 ParseObject childParse = new ParseObject("child");
                 childParse.put("description", child.getDescription());
                 listaChildParse.add(childParse);
-                childParse.saveInBackground();
+                childParse.saveInBackground(new SaveCallback() {
+                    @Override
+                    public void done(ParseException e) {
+                        if(e != null)
+                        {
+                            Log.d("salvarChildParse",e.getMessage());
+                        }
+                    }
+                });
             }
             ParseObject parentParse = new ParseObject("parent");
             parentParse.put("description", parent.getDescription());
@@ -290,7 +305,15 @@ public class CriarProjetos extends AppCompatActivity {
                 parentParse.put("imagem", parseImage);
             }
             listaParentParse.add(parentParse);
-            parentParse.saveInBackground();
+            parentParse.saveInBackground(new SaveCallback() {
+                @Override
+                public void done(ParseException e) {
+                    if(e!= null)
+                    {
+                        Log.d("salvarParentParse",e.getMessage());
+                    }
+                }
+            });
         }
         ParseObject post = new ParseObject("post" + "");
         if (postName == null) {
@@ -298,10 +321,19 @@ public class CriarProjetos extends AppCompatActivity {
         }
         post.put("name", postName);
         post.addAllUnique("parents", listaParentParse);
-        post.saveInBackground();
+        post.saveInBackground(new SaveCallback() {
+            @Override
+            public void done(ParseException e) {
+                if(e!= null)
+                {
+                    Log.d("salvarPostParse",e.getMessage());
+                }
+            }
+        });
         Toast.makeText(CriarProjetos.this, "Post feito com sucesso", Toast.LENGTH_SHORT).show();
         Intent mudarActivityMain = new Intent(this, TelaInicial.class);
         startActivity(mudarActivityMain);
+        finishActivity(0);
     }
     public void aplicarMudancas(View view)
     {
@@ -316,5 +348,23 @@ public class CriarProjetos extends AppCompatActivity {
         }
         expandableListView.getChildAt(head).findViewById(R.id.botaoSend).setVisibility(View.GONE);
         Toast.makeText(CriarProjetos.this,"As edições foram salvas com sucesso",Toast.LENGTH_SHORT).show();
+    }
+    public boolean verificarPassos()
+    {
+        for(ParentExpandableView parent : parentObjects)
+        {
+            if(parent.getDescription().equals(""))
+            {
+                return false;
+            }
+            for(ChildExpandableView child : parent.getChildObjects())
+            {
+                if(child.getDescription().equals(""))
+                {
+                    return false;
+                }
+            }
+        }
+        return true;
     }
 }

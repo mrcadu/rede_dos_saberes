@@ -66,7 +66,7 @@ public class ExpandableListAdapter extends BaseExpandableListAdapter {
             LayoutInflater inflater =(LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
             view = inflater.inflate(R.layout.activity_group_step,null);
         }
-        TextView descriptionParent = (TextView) view.findViewById(R.id.lblListHeader);
+        TextView descriptionParent = view.findViewById(R.id.lblListHeader);
         EditText descriptionParentEditable = view.findViewById(R.id.lblListHeaderEditable);
         descriptionParent.setText(currentParent.getDescription());
         descriptionParentEditable.setText(currentParent.getDescription());
@@ -74,7 +74,8 @@ public class ExpandableListAdapter extends BaseExpandableListAdapter {
     }
 
     @Override
-    public View getChildView(int groupPosition, int childPosition, boolean b, View view, ViewGroup viewGroup) {
+    public View getChildView(int groupPosition, int childPosition, boolean b, View view, ViewGroup viewGroup)
+    {
         ParentExpandableView currentParent = getGroup(groupPosition);
         LayoutInflater inflater = (LayoutInflater)context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         //the first row is used as header
@@ -89,14 +90,31 @@ public class ExpandableListAdapter extends BaseExpandableListAdapter {
             ChildExpandableView currentChild = getChild(groupPosition,childPosition-1);
             view = inflater.inflate(R.layout.activity_step,null);
             TextView description = (TextView) view.findViewById(R.id.lblListItem);
-            EditText descriptionEditable = (EditText) view.findViewById(R.id.lblListItemEditable);
+            EditText descriptionEditable = view.findViewById(R.id.lblListItemEditable);
             description.setText(currentChild.getDescription());
             descriptionEditable.setText(currentChild.getDescription());
         }
         //the last row is used as footer
         if(childPosition == getChildrenCount(groupPosition)-1)
         {
+
             view = inflater.inflate(R.layout.activity_last_child,null);
+            TextView nomeImagens = view.findViewById(R.id.nomeImagens);
+            nomeImagens.setText("");
+            if(currentParent.getListaImagens().size() == 0)
+            {
+                nomeImagens.setVisibility(View.GONE);
+            }
+            else {
+                for (byte[] imagem : currentParent.getListaImagens())
+                {
+                    Integer numeroImagem = currentParent.getListaImagens().indexOf(imagem) + 1;
+                    StringBuilder stringBuilder = new StringBuilder();
+                    stringBuilder.append(numeroImagem);
+                    nomeImagens.append("imagem".concat(stringBuilder.toString()));
+                    nomeImagens.append("\n");
+                }
+            }
         }
         return view;
     }

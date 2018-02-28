@@ -3,7 +3,7 @@ package com.example.cadu.rededossaberes;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 
-public class listaChilds extends AppCompatActivity {
+public class ListaChilds extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

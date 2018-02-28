@@ -6,4 +6,7 @@
         <item name="colorAccent">@color/colorAccent</item>
         <item name="android:textColorSecondary">@android:color/black</item>
     </style>
+    <style name = "whiteBackground" parent = "@style/AppTheme">
+        <item name = "android:windowBackground">@android:color/white</item>
+    </style>
 </resources>

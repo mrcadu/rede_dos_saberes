@@ -19,7 +19,7 @@
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
-        android:theme="@style/AppTheme">
+        android:theme="@style/whiteBackground">
         <meta-data
             android:name="com.parse.SERVER_URL"
             android:value="@string/parse_server_url" />
@@ -47,7 +47,7 @@
         <activity android:name=".Post" />
         <activity android:name=".activity.VisualizarPost" />
         <activity android:name=".ListaParents" />
-        <activity android:name=".listaChilds"></activity>
+        <activity android:name=".ListaChilds"></activity>
     </application>
 
 </manifest>

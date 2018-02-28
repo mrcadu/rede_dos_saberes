@@ -12,6 +12,8 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
+
+import com.example.cadu.rededossaberes.ActionBarSingleton;
 import com.example.cadu.rededossaberes.R;
 import com.example.cadu.rededossaberes.adapter.ParentShowerAdapter;
 import com.parse.FindCallback;
@@ -34,9 +36,9 @@ public class VerProjetos extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_ver_projetos);
+        findViewById(R.id.posts).setVisibility(View.GONE);
         Toolbar toolbarCadastro = findViewById(R.id.toolbar);
-        setSupportActionBar(toolbarCadastro);
-        getSupportActionBar().setDisplayShowTitleEnabled(false);
+        ActionBarSingleton.getInstance().setarActionBar(toolbarCadastro,this);
         listView = findViewById(R.id.posts);
         ParseQuery<ParseObject> query = ParseQuery.getQuery("post");
         query.orderByAscending("createdAt");
@@ -67,6 +69,8 @@ public class VerProjetos extends AppCompatActivity {
                 startActivity(intent);
             }
         });
+        findViewById(R.id.waiting).setVisibility(View.GONE);
+        findViewById(R.id.posts).setVisibility(View.VISIBLE);
     }
     @Override
     public boolean onCreateOptionsMenu(Menu menu)
@@ -87,22 +91,4 @@ public class VerProjetos extends AppCompatActivity {
                 return super.onOptionsItemSelected(item);
         }
     }
-    public void pegarElementosParse()
-    {
-        ParseQuery<ParseObject> query = ParseQuery.getQuery("Post");
-        query.getFirstInBackground(new GetCallback<ParseObject>() {
-            @Override
-            public void done(ParseObject object, ParseException e) {
-                if(e == null)
-                {
-                    listaPostagens.add(object);
-                }
-                else
-                {
-                    Log.d("post",e.getMessage());
-                }
-            }
-        });
-    }
-
 }
