@@ -40,7 +40,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
-public class CriarProjetos extends AppCompatActivity {
+public class CriarProjetos extends ToolbarActivity {
     ExpandableListView expandableListView;
     static List<ParentExpandableView> parentObjects = new ArrayList<>();
     int currentParent;
@@ -56,8 +56,6 @@ public class CriarProjetos extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_criar_projetos);
-        Toolbar toolbarCadastro = findViewById(R.id.toolbar);
-        ActionBarSingleton.getInstance().setarActionBar(toolbarCadastro, this);
         expandableListView = findViewById(R.id.lvExp);
         expandableListView.setOnGroupExpandListener(onGroupExpandListenser);
         expandableListView.setAdapter(adapter);
@@ -118,26 +116,6 @@ public class CriarProjetos extends AppCompatActivity {
             }
         });
     }
-
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        MenuInflater inflater = getMenuInflater();
-        inflater.inflate(R.menu.menu_buttons, menu);
-        return true;
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        switch (item.getItemId()) {
-            case R.id.action_sair:
-                ParseUser.logOut();
-                Intent mudarActivityLogin = new Intent(CriarProjetos.this, Login.class);
-                startActivity(mudarActivityLogin);
-            default:
-                return super.onOptionsItemSelected(item);
-        }
-    }
-
     ExpandableListView.OnGroupExpandListener onGroupExpandListenser = new ExpandableListView.OnGroupExpandListener() {
         int previousGroup = -1;
 

@@ -25,7 +25,7 @@ import com.parse.ParseUser;
 import java.util.ArrayList;
 import java.util.List;
 
-public class VerProjetos extends AppCompatActivity {
+public class VerProjetos extends ToolbarActivity {
 
     ListView listView;
     Context context = VerProjetos.this;
@@ -37,8 +37,6 @@ public class VerProjetos extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_ver_projetos);
         findViewById(R.id.posts).setVisibility(View.GONE);
-        Toolbar toolbarCadastro = findViewById(R.id.toolbar);
-        ActionBarSingleton.getInstance().setarActionBar(toolbarCadastro,this);
         listView = findViewById(R.id.posts);
         ParseQuery<ParseObject> query = ParseQuery.getQuery("post");
         query.orderByAscending("createdAt");
@@ -71,24 +69,5 @@ public class VerProjetos extends AppCompatActivity {
         });
         findViewById(R.id.waiting).setVisibility(View.GONE);
         findViewById(R.id.posts).setVisibility(View.VISIBLE);
-    }
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu)
-    {
-        MenuInflater inflater = getMenuInflater();
-        inflater.inflate(R.menu.menu_buttons, menu);
-        return true;
-    }
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        switch ( item.getItemId() )
-        {
-            case R.id.action_sair:
-                ParseUser.logOut();
-                Intent mudarActivityLogin = new Intent(VerProjetos.this,Login.class);
-                startActivity(mudarActivityLogin);
-            default:
-                return super.onOptionsItemSelected(item);
-        }
     }
 }

@@ -2,34 +2,24 @@ package com.example.cadu.rededossaberes.activity;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.Toolbar;
 import android.text.SpannableString;
 import android.text.style.UnderlineSpan;
 import android.util.Log;
-import android.view.Menu;
-import android.view.MenuInflater;
-import android.view.MenuItem;
 import android.view.View;
 import android.widget.EditText;
-import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
-
 import com.example.cadu.rededossaberes.R;
 import com.parse.ParseException;
 import com.parse.ParseUser;
 import com.parse.SignUpCallback;
 
-public class Cadastro extends AppCompatActivity {
+public class Cadastro extends ToolbarActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState)
     {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_cadastro);
-        Toolbar toolbarCadastro = findViewById(R.id.toolbar);
-        setSupportActionBar(toolbarCadastro);
-        getSupportActionBar().setDisplayShowTitleEnabled(false);
         TextView loginSemConta = findViewById(R.id.loginSemConta);
         if(TelaInicial.telaOrigem == "verProjetos")
         {
@@ -41,25 +31,6 @@ public class Cadastro extends AppCompatActivity {
         else
         {
             loginSemConta.setVisibility(View.INVISIBLE);
-        }
-    }
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu)
-    {
-        MenuInflater inflater = getMenuInflater();
-        inflater.inflate(R.menu.menu_buttons, menu);
-        return true;
-    }
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        switch ( item.getItemId() )
-        {
-            case R.id.action_sair:
-                ParseUser.logOut();
-                Intent mudarActivityLogin = new Intent(Cadastro.this,Login.class);
-                startActivity(mudarActivityLogin);
-            default:
-                return super.onOptionsItemSelected(item);
         }
     }
     public void criarConta(View view)

@@ -17,33 +17,13 @@ import com.parse.LogInCallback;
 import com.parse.ParseException;
 import com.parse.ParseUser;
 
-public class Login extends AppCompatActivity {
+public class Login extends ToolbarActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState)
     {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
-        Toolbar toolbarLogin = findViewById(R.id.toolbar);
-        setSupportActionBar(toolbarLogin);
-        getSupportActionBar().setDisplayShowTitleEnabled(false);
-    }
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu)
-    {
-        MenuInflater inflater = getMenuInflater();
-        inflater.inflate(R.menu.menu_buttons, menu);
-        return true;
-    }
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        switch ( item.getItemId() )
-        {
-            case R.id.action_sair:
-                ParseUser.logOut();
-            default:
-                return super.onOptionsItemSelected(item);
-        }
     }
     public void logar(View view)
     {
