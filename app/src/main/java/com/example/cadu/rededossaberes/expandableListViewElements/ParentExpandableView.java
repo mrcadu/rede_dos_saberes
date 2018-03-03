@@ -8,7 +8,7 @@ import java.util.Queue;
 
 public class ParentExpandableView
 {
-    private ArrayList<byte[]> listaImagens;
+    private byte[] imagemDescription;
     private String description;
     private List<ChildExpandableView> childObjects;
 
@@ -19,14 +19,12 @@ public class ParentExpandableView
         childExpandableViews.add(child);
         this.description = description;
         this.childObjects = childExpandableViews;
-        this.listaImagens = new ArrayList<>();
     }
     public ParentExpandableView(String description)
     {
         List<ChildExpandableView> childExpandableViews = new ArrayList<>();
         this.description = description;
         this.childObjects = childExpandableViews;
-        this.listaImagens = new ArrayList<>();
     }
     public List<ChildExpandableView> getChildObjects()
     {
@@ -42,7 +40,12 @@ public class ParentExpandableView
     {
         this.description = description;
     }
-    public ArrayList<byte[]> getListaImagens() {
-        return listaImagens;
+    public byte[] getImagemDescription()
+    {
+        return imagemDescription;
+    }
+    public void setImagemDescription(byte[] imagemDescription)
+    {
+        this.imagemDescription = imagemDescription;
     }
 }

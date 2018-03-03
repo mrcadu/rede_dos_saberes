@@ -16,6 +16,9 @@ import com.example.cadu.rededossaberes.R;
 public class ExpandableListAdapter extends BaseExpandableListAdapter {
     Context context;
     List<ParentExpandableView> parentExpandableViews;
+
+    private boolean FotoPresente;
+
     public ExpandableListAdapter(Context context, List<ParentExpandableView> parentExpandableViews)
     {
         this.context = context;
@@ -82,6 +85,14 @@ public class ExpandableListAdapter extends BaseExpandableListAdapter {
         if(childPosition ==0)
         {
             view = inflater.inflate(R.layout.activity_header, null);
+            if(isFotoPresente())
+            {
+                view.findViewById(R.id.botaoRemoverImagem).setVisibility(View.VISIBLE);
+            }
+            else
+            {
+                view.findViewById(R.id.botaoRemoverImagem).setVisibility(View.GONE);
+            }
         }
 
         //Here is the ListView of the ChildView
@@ -101,19 +112,16 @@ public class ExpandableListAdapter extends BaseExpandableListAdapter {
             view = inflater.inflate(R.layout.activity_last_child,null);
             TextView nomeImagens = view.findViewById(R.id.nomeImagens);
             nomeImagens.setText("");
-            if(currentParent.getListaImagens().size() == 0)
+            if(currentParent.getImagemDescription() == null)
             {
                 nomeImagens.setVisibility(View.GONE);
             }
-            else {
-                for (byte[] imagem : currentParent.getListaImagens())
-                {
-                    Integer numeroImagem = currentParent.getListaImagens().indexOf(imagem) + 1;
-                    StringBuilder stringBuilder = new StringBuilder();
-                    stringBuilder.append(numeroImagem);
-                    nomeImagens.append("imagem".concat(stringBuilder.toString()));
-                    nomeImagens.append("\n");
-                }
+            else
+            {
+                StringBuilder stringBuilder = new StringBuilder();
+                stringBuilder.append("1");
+                nomeImagens.append("imagem".concat(stringBuilder.toString()));
+                nomeImagens.append("\n");
             }
         }
         return view;
@@ -123,5 +131,12 @@ public class ExpandableListAdapter extends BaseExpandableListAdapter {
     public boolean isChildSelectable(int i, int i2)
     {
         return true;
+    }
+    public boolean isFotoPresente() {
+        return FotoPresente;
+    }
+
+    public void setFotoPresente(boolean fotoPresente) {
+        FotoPresente = fotoPresente;
     }
 }

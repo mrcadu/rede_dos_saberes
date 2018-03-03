@@ -13,14 +13,6 @@ import com.example.cadu.rededossaberes.R;
 import com.example.cadu.rededossaberes.activity.CriarProjetos;
 
 public class TextViewEditFragment extends DialogFragment {
-/*
-    @Override
-    public void onCreate(Bundle savedInstanceState)
-    {*/
-/*        super.onCreate(savedInstanceState);
-        final View view = getActivity().getLayoutInflater().inflate(R.layout.activity_input_text, null);
-        final EditText editableText = view.findViewById(R.id.currentText);
-        editableText.setText(savedInstanceState.getString("currentName"));*/
     @Override
     public Dialog onCreateDialog(final Bundle savedInstanceState) {
         super.onCreateDialog(savedInstanceState);

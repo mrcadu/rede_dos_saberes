@@ -17,11 +17,13 @@ import android.view.MotionEvent;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ExpandableListView;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 import com.example.cadu.rededossaberes.ActionBarSingleton;
 import com.example.cadu.rededossaberes.RightDrawableOnTouchListener;
 import com.example.cadu.rededossaberes.expandableListViewElements.ChildExpandableView;
+import com.example.cadu.rededossaberes.fragment.ImageShowerFragment;
 import com.example.cadu.rededossaberes.fragment.NomearPostFragment;
 import com.example.cadu.rededossaberes.expandableListViewElements.ParentExpandableView;
 import com.example.cadu.rededossaberes.R;
@@ -55,7 +57,7 @@ public class CriarProjetos extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_criar_projetos);
         Toolbar toolbarCadastro = findViewById(R.id.toolbar);
-        ActionBarSingleton.getInstance().setarActionBar(toolbarCadastro,this);
+        ActionBarSingleton.getInstance().setarActionBar(toolbarCadastro, this);
         expandableListView = findViewById(R.id.lvExp);
         expandableListView.setOnGroupExpandListener(onGroupExpandListenser);
         expandableListView.setAdapter(adapter);
@@ -77,7 +79,7 @@ public class CriarProjetos extends AppCompatActivity {
         expandableListView.setOnGroupExpandListener(new ExpandableListView.OnGroupExpandListener() {
             @Override
             public void onGroupExpand(int i) {
-                if(i != currentParent){
+                if (i != currentParent) {
                     expandableListView.collapseGroup(currentParent);
                 }
                 currentParent = i;
@@ -94,21 +96,19 @@ public class CriarProjetos extends AppCompatActivity {
                     @Override
                     public boolean onDrawableTouch(final MotionEvent event) {
                         Bundle bundle = new Bundle();
-                        bundle.putString("currentName",parentEdit.getText().toString());
-                        bundle.putInt("currentParentIndex",groupPosition);
+                        bundle.putString("currentName", parentEdit.getText().toString());
+                        bundle.putInt("currentParentIndex", groupPosition);
                         TextViewEditFragment dFragment = new TextViewEditFragment();
                         dFragment.setArguments(bundle);
                         dFragment.show(manager, "alert dialog fragment");
                         return true;
                     }
+
                     @Override
                     public boolean onTextViewTouch(MotionEvent event) {
-                        if(expandableListView.isGroupExpanded(groupPosition))
-                        {
+                        if (expandableListView.isGroupExpanded(groupPosition)) {
                             expandableListView.collapseGroup(currentParent);
-                        }
-                        else
-                        {
+                        } else {
                             expandableListView.expandGroup(groupPosition);
                         }
                         return false;
@@ -250,6 +250,10 @@ public class CriarProjetos extends AppCompatActivity {
         if (requestCode == 1 && resultCode == RESULT_OK && data != null) {
             Uri localImagemSelecionada = data.getData();
             try {
+                if(parentObjects.get(currentParent).getImagemDescription() != null)
+                {
+                    Toast.makeText(CriarProjetos.this, "A última imagem foi substituída pela atual", Toast.LENGTH_SHORT).show();
+                }
                 byte[] byteArray;
                 Bitmap imagem = MediaStore.Images.Media.getBitmap(getContentResolver(), localImagemSelecionada);
                 ByteArrayOutputStream stream = new ByteArrayOutputStream();
@@ -257,15 +261,17 @@ public class CriarProjetos extends AppCompatActivity {
                 byteArray = stream.toByteArray();
                 if(byteArray != null)
                 {
-                    parentObjects.get(currentParent).getListaImagens().add(byteArray);
+                    parentObjects.get(currentParent).setImagemDescription(byteArray);
                 }
             } catch (IOException e) {
                 e.printStackTrace();
             }
             Toast.makeText(CriarProjetos.this, "Foto adicionada com sucesso", Toast.LENGTH_SHORT).show();
         }
-        adapter.notifyDataSetChanged();
-        super.onActivityResult(requestCode, resultCode, data);
+            adapter.setFotoPresente(true);
+            adapter.notifyDataSetChanged();
+            super.onActivityResult(requestCode, resultCode, data);
+
     }
 
     public void enviarObjetos(View view) {
@@ -300,10 +306,8 @@ public class CriarProjetos extends AppCompatActivity {
             ParseObject parentParse = new ParseObject("parent");
             parentParse.put("description", parent.getDescription());
             parentParse.addAllUnique("childs", listaChildParse);
-            for (byte[] imagem : parent.getListaImagens()) {
-                ParseFile parseImage = new ParseFile("imagem.png", imagem);
-                parentParse.put("imagem", parseImage);
-            }
+            ParseFile parseImage = new ParseFile("imagem.png", parent.getImagemDescription());
+            parentParse.put("imagem", parseImage);
             listaParentParse.add(parentParse);
             parentParse.saveInBackground(new SaveCallback() {
                 @Override
@@ -366,5 +370,19 @@ public class CriarProjetos extends AppCompatActivity {
             }
         }
         return true;
+    }
+    public void visualizarImagem(View view)
+    {
+        ImageShowerFragment imageShower = new ImageShowerFragment();
+        Bundle bundle = new Bundle();
+        bundle.putByteArray("imagem", parentObjects.get(currentParent).getImagemDescription());
+        imageShower.setArguments(bundle);
+        imageShower.show(manager,"alert dialog fragment");
+    }
+    public void removerImagem(View view)
+    {
+        parentObjects.get(currentParent).setImagemDescription(null);
+        adapter.setFotoPresente(false);
+        adapter.notifyDataSetChanged();
     }
 }
