@@ -44,10 +44,10 @@
         <activity android:name=".expandableListViewElements.LastChild" />
         <activity android:name=".expandableListViewElements.header" />
         <activity android:name=".fragment.InputTextFragment" />
-        <activity android:name=".Post" />
+        <activity android:name=".utils.Post" />
         <activity android:name=".activity.VisualizarPost" />
-        <activity android:name=".ListaParents" />
-        <activity android:name=".ListaChilds"></activity>
+        <activity android:name=".expandableListViewElements.ListaParents" />
+        <activity android:name=".expandableListViewElements.ListaChilds"></activity>
     </application>
 
 </manifest>

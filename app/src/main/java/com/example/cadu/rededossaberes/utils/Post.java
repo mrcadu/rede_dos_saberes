@@ -1,8 +1,9 @@
-package com.example.cadu.rededossaberes;
+package com.example.cadu.rededossaberes.utils;
 
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 
+import com.example.cadu.rededossaberes.R;
 import com.example.cadu.rededossaberes.expandableListViewElements.ParentExpandableView;
 import com.parse.ParseObject;
 

@@ -39,14 +39,10 @@ public class NomearPostFragment extends DialogFragment {
                     }
                 })
                 // Negative Button
-                .setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
-                    public void onClick(DialogInterface dialog, int which) {
-                        CriarProjetos.removeLastElement();
-                        LayoutInflater inflater = getLayoutInflater();
-                        View view = inflater.inflate(R.layout.activity_criar_projetos,null);
-                        Button botao = view.findViewById(R.id.botaoAtualizar);
-                        botao.callOnClick();
-                        dialog.dismiss();
+                .setNegativeButton("cancelar", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+
                     }
                 }).create();
     }

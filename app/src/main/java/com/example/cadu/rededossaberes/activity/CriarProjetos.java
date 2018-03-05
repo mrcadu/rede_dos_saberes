@@ -7,21 +7,14 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
 import android.support.v4.app.FragmentManager;
-import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.Toolbar;
 import android.util.Log;
-import android.view.Menu;
-import android.view.MenuInflater;
-import android.view.MenuItem;
 import android.view.MotionEvent;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ExpandableListView;
-import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
-import com.example.cadu.rededossaberes.ActionBarSingleton;
-import com.example.cadu.rededossaberes.RightDrawableOnTouchListener;
+import com.example.cadu.rededossaberes.utils.RightDrawableOnTouchListener;
 import com.example.cadu.rededossaberes.expandableListViewElements.ChildExpandableView;
 import com.example.cadu.rededossaberes.fragment.ImageShowerFragment;
 import com.example.cadu.rededossaberes.fragment.NomearPostFragment;
@@ -33,7 +26,6 @@ import com.example.cadu.rededossaberes.fragment.TextViewEditFragment;
 import com.parse.ParseException;
 import com.parse.ParseFile;
 import com.parse.ParseObject;
-import com.parse.ParseUser;
 import com.parse.SaveCallback;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
@@ -51,6 +43,7 @@ public class CriarProjetos extends ToolbarActivity {
     ArrayList<Integer> listaChild = new ArrayList<>();
     int head;
     public static String postName;
+    ArrayList<ParseObject> listaParentParse = new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -161,6 +154,7 @@ public class CriarProjetos extends ToolbarActivity {
     public void removerParent(View view)
     {
         parentObjects.remove(currentParent);
+        expandableListView.collapseGroup(currentParent);
         adapter.notifyDataSetChanged();
     }
 
@@ -246,7 +240,7 @@ public class CriarProjetos extends ToolbarActivity {
             }
             Toast.makeText(CriarProjetos.this, "Foto adicionada com sucesso", Toast.LENGTH_SHORT).show();
         }
-            adapter.setFotoPresente(true);
+            adapter.isFotoPresente().put(parentObjects.get(currentParent),Boolean.TRUE);
             adapter.notifyDataSetChanged();
             super.onActivityResult(requestCode, resultCode, data);
 
@@ -263,39 +257,19 @@ public class CriarProjetos extends ToolbarActivity {
             Toast.makeText(CriarProjetos.this, "Não é possível enviar um post que possua passos sem descrição", Toast.LENGTH_LONG).show();
             return;
         }
-        ArrayList<ParseObject> listaParentParse = new ArrayList<>();
         for (ParentExpandableView parent : parentObjects) {
             ArrayList<ParseObject> listaChildParse = new ArrayList<>();
             for (ChildExpandableView child : parent.getChildObjects()) {
-
                 ParseObject childParse = new ParseObject("child");
                 childParse.put("description", child.getDescription());
                 listaChildParse.add(childParse);
-                childParse.saveInBackground(new SaveCallback() {
-                    @Override
-                    public void done(ParseException e) {
-                        if(e != null)
-                        {
-                            Log.d("salvarChildParse",e.getMessage());
-                        }
-                    }
-                });
             }
             ParseObject parentParse = new ParseObject("parent");
             parentParse.put("description", parent.getDescription());
             parentParse.addAllUnique("childs", listaChildParse);
-            ParseFile parseImage = new ParseFile("imagem.png", parent.getImagemDescription());
-            parentParse.put("imagem", parseImage);
+            ParseFile imagem = new ParseFile("imagem",parent.getImagemDescription());
+            parentParse.add("imagem",imagem);
             listaParentParse.add(parentParse);
-            parentParse.saveInBackground(new SaveCallback() {
-                @Override
-                public void done(ParseException e) {
-                    if(e!= null)
-                    {
-                        Log.d("salvarParentParse",e.getMessage());
-                    }
-                }
-            });
         }
         ParseObject post = new ParseObject("post" + "");
         if (postName == null) {
@@ -306,14 +280,13 @@ public class CriarProjetos extends ToolbarActivity {
         post.saveInBackground(new SaveCallback() {
             @Override
             public void done(ParseException e) {
-                if(e!= null)
-                {
-                    Log.d("salvarPostParse",e.getMessage());
+                if (e != null) {
+                    Log.d("salvarPostParse", e.getMessage());
                 }
             }
         });
         Toast.makeText(CriarProjetos.this, "Post feito com sucesso", Toast.LENGTH_SHORT).show();
-        Intent mudarActivityMain = new Intent(this, TelaInicial.class);
+        Intent mudarActivityMain = new Intent(CriarProjetos.this, TelaInicial.class);
         startActivity(mudarActivityMain);
         finishActivity(0);
     }
@@ -360,7 +333,7 @@ public class CriarProjetos extends ToolbarActivity {
     public void removerImagem(View view)
     {
         parentObjects.get(currentParent).setImagemDescription(null);
-        adapter.setFotoPresente(false);
+        adapter.isFotoPresente().put(parentObjects.get(currentParent),Boolean.FALSE);
         adapter.notifyDataSetChanged();
     }
 }

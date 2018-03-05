@@ -1,4 +1,4 @@
-package com.example.cadu.rededossaberes;
+package com.example.cadu.rededossaberes.utils;
 
 
 import android.graphics.Rect;
