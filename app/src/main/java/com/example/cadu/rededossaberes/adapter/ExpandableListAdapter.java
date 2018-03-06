@@ -1,5 +1,6 @@
 package com.example.cadu.rededossaberes.adapter;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -19,10 +20,11 @@ public class ExpandableListAdapter extends BaseExpandableListAdapter {
     Context context;
     List<ParentExpandableView> parentExpandableViews;
 
-    private Map<ParentExpandableView,Boolean> FotoPresente;
+    private Map<ParentExpandableView,Boolean> fotoPresente;
 
     public ExpandableListAdapter(Context context, List<ParentExpandableView> parentExpandableViews)
     {
+        fotoPresente = new HashMap<>();
         this.context = context;
         this.parentExpandableViews = parentExpandableViews;
     }
@@ -87,7 +89,7 @@ public class ExpandableListAdapter extends BaseExpandableListAdapter {
         if(childPosition ==0)
         {
             view = inflater.inflate(R.layout.activity_header, null);
-            if(isFotoPresente().get(currentParent) != null)
+            if(getFotoPresente().get(currentParent) != null)
             {
                 view.findViewById(R.id.botaoRemoverImagem).setVisibility(View.VISIBLE);
             }
@@ -134,11 +136,12 @@ public class ExpandableListAdapter extends BaseExpandableListAdapter {
     {
         return true;
     }
-    public Map<ParentExpandableView,Boolean> isFotoPresente() {
-        return FotoPresente;
+
+    public Map<ParentExpandableView,Boolean> getFotoPresente() {
+        return fotoPresente;
     }
 
     public void setFotoPresente(Map<ParentExpandableView,Boolean> fotoPresente) {
-        FotoPresente = fotoPresente;
+        this.fotoPresente = fotoPresente;
     }
 }

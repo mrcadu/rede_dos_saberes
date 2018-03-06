@@ -240,7 +240,7 @@ public class CriarProjetos extends ToolbarActivity {
             }
             Toast.makeText(CriarProjetos.this, "Foto adicionada com sucesso", Toast.LENGTH_SHORT).show();
         }
-            adapter.isFotoPresente().put(parentObjects.get(currentParent),Boolean.TRUE);
+            adapter.getFotoPresente().put(parentObjects.get(currentParent),Boolean.TRUE);
             adapter.notifyDataSetChanged();
             super.onActivityResult(requestCode, resultCode, data);
 
@@ -333,7 +333,15 @@ public class CriarProjetos extends ToolbarActivity {
     public void removerImagem(View view)
     {
         parentObjects.get(currentParent).setImagemDescription(null);
-        adapter.isFotoPresente().put(parentObjects.get(currentParent),Boolean.FALSE);
+        adapter.getFotoPresente().put(parentObjects.get(currentParent),Boolean.FALSE);
         adapter.notifyDataSetChanged();
     }
+    public static List<ParentExpandableView> getParentObjects() {
+        return parentObjects;
+    }
+
+    public static void setParentObjects(List<ParentExpandableView> parentObjects) {
+        CriarProjetos.parentObjects = parentObjects;
+    }
+
 }

@@ -58,7 +58,6 @@
             android:layout_toRightOf="@id/botaoRemoverStep"
             android:onClick="atualizar"
             android:visibility="gone" />
-
         <Button
             android:id="@+id/botaoEnviarSerio"
             android:layout_width="wrap_content"
