@@ -267,8 +267,9 @@ public class CriarProjetos extends ToolbarActivity {
             ParseObject parentParse = new ParseObject("parent");
             parentParse.put("description", parent.getDescription());
             parentParse.addAllUnique("childs", listaChildParse);
-            ParseFile imagem = new ParseFile("imagem",parent.getImagemDescription());
-            parentParse.add("imagem",imagem);
+            byte[] descricaoImagem = parent.getImagemDescription();
+            ParseFile imagem = new ParseFile("imagem",descricaoImagem);
+            parentParse.put("imagem",imagem);
             listaParentParse.add(parentParse);
         }
         ParseObject post = new ParseObject("post" + "");
