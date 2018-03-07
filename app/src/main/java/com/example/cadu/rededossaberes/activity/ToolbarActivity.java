@@ -32,7 +32,7 @@ public class ToolbarActivity extends AppCompatActivity
         switch ( item.getItemId() )
         {
             case R.id.action_sair:
-                ParseUser.logOut();
+                ParseUser.logOutInBackground();
                 Intent mudarActivityLogin = new Intent(this,Login.class);
                 startActivity(mudarActivityLogin);
             default:

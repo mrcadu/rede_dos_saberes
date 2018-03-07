@@ -57,4 +57,9 @@ public class Login extends ToolbarActivity {
         });
     }
 
+    public void mudarActivityCadastro(View view)
+    {
+        Intent intent = new Intent(this,Cadastro.class);
+        startActivity(intent);
+    }
 }

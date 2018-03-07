@@ -9,15 +9,15 @@ import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 import com.example.cadu.rededossaberes.R;
+import com.parse.ParseException;
 import com.parse.ParseFile;
 import com.parse.ParseObject;
 import com.squareup.picasso.Picasso;
-
 import java.util.List;
 
 public class ParentShowerAdapter extends BaseAdapter {
 
-    List<ParseObject> listaPosts;
+    private List<ParseObject> listaPosts;
     Context context;
 
     public ParentShowerAdapter(Context context, List<ParseObject> listaPosts) {
@@ -55,14 +55,28 @@ public class ParentShowerAdapter extends BaseAdapter {
         boolean firstPicture = false;
         for(ParseObject parentPost : listaParentsPost)
         {
+            try {
+                parentPost.fetchIfNeeded();
+            } catch (ParseException e) {
+                e.printStackTrace();
+            }
             if(parentPost.getParseFile("imagem") != null && firstPicture == false)
             {
                 ParseFile imagemDescricaoParse = parentPost.getParseFile("imagem");
+                ViewGroup.LayoutParams params = imagemDescricao.getLayoutParams();
                 Picasso.with(this.context).load(imagemDescricaoParse.getUrl()).fit().into(imagemDescricao);
+                imagemDescricao.refreshDrawableState();
                 Log.d("teste", "funcionou");
                 firstPicture = true;
             }
         }
         return convertView;
+    }
+    public List<ParseObject> getListaPosts() {
+        return listaPosts;
+    }
+
+    public void setListaPosts(List<ParseObject> listaPosts) {
+        this.listaPosts = listaPosts;
     }
 }

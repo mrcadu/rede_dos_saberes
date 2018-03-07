@@ -6,7 +6,8 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
-import android.widget.ListView;
+import android.widget.GridView;
+import android.widget.TextView;
 
 import com.example.cadu.rededossaberes.R;
 import com.example.cadu.rededossaberes.adapter.ParentShowerAdapter;
@@ -20,7 +21,7 @@ import java.util.List;
 
 public class VerProjetos extends ToolbarActivity {
 
-    ListView listView;
+    GridView gridView;
     Context context = VerProjetos.this;
     ParentShowerAdapter adapter;
     ArrayList<ParseObject> listaPostagens = new ArrayList();
@@ -29,8 +30,7 @@ public class VerProjetos extends ToolbarActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_ver_projetos);
-        findViewById(R.id.posts).setVisibility(View.GONE);
-        listView = findViewById(R.id.posts);
+        gridView = findViewById(R.id.posts);
         ParseQuery<ParseObject> query = ParseQuery.getQuery("post");
         query.orderByAscending("createdAt");
         query.include("parents");
@@ -43,7 +43,7 @@ public class VerProjetos extends ToolbarActivity {
                                                listaPostagens.add(object);
                                            }
                                            adapter = new ParentShowerAdapter(context, listaPostagens);
-                                           listView.setAdapter(adapter);
+                                           gridView.setAdapter(adapter);
                                        }
                                        else
                                            {
@@ -51,7 +51,7 @@ public class VerProjetos extends ToolbarActivity {
                                            }
                                    }
                                });
-        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+        gridView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id)
             {
@@ -60,7 +60,30 @@ public class VerProjetos extends ToolbarActivity {
                 startActivity(intent);
             }
         });
-        findViewById(R.id.waiting).setVisibility(View.GONE);
-        findViewById(R.id.posts).setVisibility(View.VISIBLE);
+    }
+
+    public void BuscarPosts(View view)
+    {
+        TextView textoBusca = findViewById(R.id.buscaTexto) ;
+        ParseQuery<ParseObject> query = ParseQuery.getQuery("post");
+        query.whereContains("name",textoBusca.getText().toString());
+        query.findInBackground(new FindCallback<ParseObject>() {
+            @Override
+            public void done(List<ParseObject> objects, ParseException e)
+            {
+                if(e == null) {
+                    listaPostagens = new ArrayList<>();
+                    for (ParseObject object : objects) {
+                        listaPostagens.add(object);
+                    }
+                    adapter.setListaPosts(listaPostagens);
+                    adapter.notifyDataSetChanged();
+                }
+                else
+                {
+                    Log.d("post",e.getMessage());
+                }
+            }
+        });
     }
 }

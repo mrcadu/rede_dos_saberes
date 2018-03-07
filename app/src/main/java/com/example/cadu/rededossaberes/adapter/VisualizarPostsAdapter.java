@@ -86,7 +86,6 @@ public class VisualizarPostsAdapter extends BaseAdapter {
         if(singleImageParentPreview.get(currentListData) != null)
         {
             Picasso.with(this.context).load(singleImageParentPreview.get(currentListData).getUrl()).fit().into(descricaoParentsImage);
-
         }
         else
         {

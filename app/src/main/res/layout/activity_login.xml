@@ -28,7 +28,18 @@
         android:hint="Senha"
         android:backgroundTint="@color/blueSky"/>
 
+    <TextView
+        android:id="@+id/fazerCadastro"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignStart="@+id/Senha"
+        android:layout_below="@+id/Senha"
+        android:text="Fazer Cadastro"
+        android:onClick="mudarActivityCadastro"
+        android:textColor="@color/blueSky"/>
+
     <Button
+        android:id="@+id/botaoSenha"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignEnd="@id/Senha"
@@ -37,6 +48,7 @@
         android:layout_centerHorizontal="true"
         android:background="@drawable/login_button"
         android:text="Fazer Login"
+        android:layout_marginTop="20dp"
         android:onClick="logar"
         android:textColor="@android:color/white"/>
 </RelativeLayout>

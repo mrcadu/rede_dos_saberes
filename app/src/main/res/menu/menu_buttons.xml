@@ -1,30 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
       xmlns:app="http://schemas.android.com/apk/res-auto">
-    <item
-        android:id="@+id/action_pontuação"
-        android:title="@string/pontuacao"
-        android:orderInCategory="100"
-        app:showAsAction="never" />
-    <item
-        android:id="@+id/action"
-        android:title="@string/perguntas"
-        android:orderInCategory="100"
-        app:showAsAction="never" />
-    <item
-        android:id="@+id/action_fazer_pergunta"
-        android:title="@string/fazerPerguntas"
-        android:orderInCategory="100"
-        app:showAsAction="never" />
-    <item
-        android:id="@+id/action_settings"
-        android:title="@string/settings"
-        android:orderInCategory="100"
-        app:showAsAction="never" />
+
     <item
         android:id="@+id/action_sair"
         android:title="@string/sair"
         android:orderInCategory="100"
         app:showAsAction="never" />
-
 </menu>
